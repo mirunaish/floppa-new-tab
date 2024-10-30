@@ -1,0 +1,19 @@
+.card {
+  background-color: aliceblue;
+  color: black;
+  border-radius: 8px;
+  border: 1px solid black;
+  margin: 10px;
+  overflow: hidden;
+}
+
+.card__title {
+  background-color: var(--primary);
+  color: black;
+  padding: 0.4rem 1rem;
+  cursor: move;
+}
+
+.card__body {
+  padding: 0.6rem 1rem;
+}
