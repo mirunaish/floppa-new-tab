@@ -15,12 +15,12 @@ Select a search engine, type your query, and press enter to search.
 ### To do List
 
 Add new todos and check off completed ones. They are stored in localStorage,
-so clearing cache or site data will delete them. Click on the upload button to
-upload a JSON with custom quotes.
+so clearing cache or site data will delete them.
 
 ### Daily quote
 
-A random quote every day. Click on the refresh button to get a new quote.
+A random quote every day. Click on the refresh button to get a new quote. Click on the upload button to
+upload a JSON with custom quotes.
 
 ### Images
 
