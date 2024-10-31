@@ -2,6 +2,9 @@ import React, { useCallback, useEffect, useState, ReactNode } from "react";
 import "./Card.css";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Coords } from "../types";
+import { FaMinus } from "react-icons/fa6";
+import { FaRegSquare } from "react-icons/fa6";
+import { FaX } from "react-icons/fa6";
 
 interface CardProps {
   title: string;
@@ -25,10 +28,12 @@ const Card: React.FC<CardProps> = ({
   const [movingPosition, setMovingPosition] = useState<Coords>(position); // position while moving
 
   const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = (e.target as HTMLElement).getBoundingClientRect();
+    const rect = (
+      e.target as HTMLElement
+    ).parentElement?.getBoundingClientRect();
     setClickPosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+      x: e.clientX - (rect?.left ?? 0),
+      y: e.clientY - (rect?.top ?? 0),
     });
     setIsMoving(true);
 
@@ -83,8 +88,28 @@ const Card: React.FC<CardProps> = ({
         flexDirection: "column",
       }}
     >
-      <div className="card__title" onMouseDown={handleMouseDown}>
-        {title}
+      <div
+        className="card__title"
+        style={{ display: "flex", alignItems: "center" }}
+      >
+        <div
+          onMouseDown={handleMouseDown}
+          style={{ flexGrow: 1, cursor: "move", padding: "0.4rem 1rem" }}
+        >
+          {title}
+        </div>
+        <div
+          style={{
+            padding: "0.4rem 0.6rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.6rem",
+          }}
+        >
+          <FaMinus style={{ cursor: "pointer" }} />
+          <FaRegSquare style={{ cursor: "pointer" }} />
+          <FaX style={{ cursor: "pointer" }} />
+        </div>
       </div>
       <div className="card__body">{children}</div>
     </div>

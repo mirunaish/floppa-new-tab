@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import TextInput from "./TextInput";
+import { FaPlus, FaX } from "react-icons/fa6";
 
 interface Todo {
   id: string;
@@ -42,7 +43,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
           color: "gray",
         }}
       >
-        x
+        <FaX />
       </span>
     </div>
   );
@@ -83,19 +84,20 @@ const TodoList: React.FC = () => {
   );
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
       {todoList.map((todo) => (
         <TodoItem {...todo} removeTodo={removeTodo} toggleDone={toggleDone} />
       ))}
       <div
         style={{
+          marginTop: 8,
           display: "flex",
           flexDirection: "row",
-          alignItems: "baseline",
+          alignItems: "center",
           gap: 5,
         }}
       >
-        <span style={{ margin: 4 }}> + </span>
+        <FaPlus style={{ margin: 4 }} />
         <TextInput placeholder="add new..." onEnter={addTodo} />
       </div>
     </div>
