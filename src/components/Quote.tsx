@@ -1,10 +1,13 @@
 import React, { useMemo } from "react";
-import quotes from "../assets/quotes.json";
+import initialQuotes from "../assets/quotes.json";
 import { useDailyRandom } from "../hooks/useDailyRandom";
-import { FaRotateRight } from "react-icons/fa6";
+import { FaRotateRight, FaUpload } from "react-icons/fa6";
 import Card from "./Card";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const Quote: React.FC = () => {
+  const [quotes, setQuotes] = useLocalStorage("quotes", initialQuotes);
+
   const [quoteIndex, refreshQuote] = useDailyRandom("quote", {
     min: 0,
     max: quotes.length,
@@ -12,22 +15,57 @@ const Quote: React.FC = () => {
 
   const quote = useMemo(() => {
     return quotes[quoteIndex];
-  }, [quoteIndex]);
+  }, [quoteIndex, quotes]);
+
+  const handleFileUpload = (file?: File) => {
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const uploadedQuotes = JSON.parse(e.target?.result as string);
+        if (!Array.isArray(uploadedQuotes)) {
+          console.error("Uploaded file is not a valid JSON array");
+          alert("Uploaded file is not a valid JSON array");
+        }
+
+        setQuotes(uploadedQuotes);
+        refreshQuote();
+      } catch (error) {
+        console.error("Error parsing uploaded file", error);
+        alert("Error parsing uploaded file");
+      }
+    };
+    reader.readAsText(file);
+  };
 
   return (
     <Card
       title="your daily quote"
       initialPosition={{ x: 50, y: 10 }}
       buttons={() => (
-        <FaRotateRight style={{ cursor: "pointer" }} onClick={refreshQuote} />
+        <>
+          <FaUpload
+            style={{ cursor: "pointer" }}
+            onClick={() => document.getElementById("uploadQuotes")?.click()}
+          />
+          <FaRotateRight style={{ cursor: "pointer" }} onClick={refreshQuote} />
+        </>
       )}
     >
-      <div style={{ alignItems: "baseline" }}>
+      <div style={{ alignItems: "baseline", maxWidth: 1000 }}>
         <span style={{ fontFamily: "Tangerine", fontSize: "2em" }}>
           "{quote.quote}"
         </span>
         <span style={{ color: "var(--gray)" }}> - {quote.author}</span>
       </div>
+
+      <input
+        id="uploadQuotes"
+        type="file"
+        onChange={(e) => handleFileUpload(e.target.files?.[0])}
+        style={{ display: "none" }}
+      />
     </Card>
   );
 };

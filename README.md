@@ -12,7 +12,9 @@ Select a search engine, type your query, and press enter to search.
 
 ### To do List
 
-Add new todos and check off completed ones. They are stored in localStorage, so clearing cache or site data will delete them.
+Add new todos and check off completed ones. They are stored in localStorage,
+so clearing cache or site data will delete them. Click on the upload button to
+upload a JSON with custom quotes.
 
 ### Daily quote
 
