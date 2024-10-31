@@ -24,6 +24,8 @@
   --white: #ffebf3;
   --gray: #a85e7e;
   --black: #5e3044;
+
+  --icon: url("assets/Bingus.webp");
 }
 
 a {
@@ -100,4 +102,11 @@ input[type="text"]:focus {
 input[type="text"]::placeholder {
   color: var(--gray);
   opacity: 0.75;
+}
+
+.theme-icon {
+  background-image: var(--icon);
+  background-size: cover;
+  height: 1.5em;
+  width: 1.5em;
 }

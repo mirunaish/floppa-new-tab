@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import "./SearchBar.css";
 import { DEFAULT_ENGINE, SearchEngines } from "../utils/consts";
 import TextInput from "./TextInput";
+import BubbleSelector from "./BubbleSelector";
 
 const IMAGE_SIZE = { width: 25, height: 25 };
 
@@ -25,28 +26,16 @@ const SearchBar: React.FC = () => {
         }}
       />
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          marginTop: 8,
-        }}
-      >
-        {Object.keys(SearchEngines).map((id) => (
-          <div
-            key={id}
-            onClick={() => {
-              setSearchEngine(id);
-            }}
-            className={"bubble" + (id === searchEngine ? " selected" : "")}
-          >
-            <div
-              className={id}
-              style={{ ...IMAGE_SIZE, margin: 5, padding: 0 }}
-            />
-          </div>
-        ))}
-      </div>
+      <BubbleSelector
+        value={searchEngine}
+        onChange={setSearchEngine}
+        style={{ marginTop: 8 }}
+        options={Object.entries(SearchEngines).map(([id, engine]) => ({
+          id,
+          image: (props) => <img {...props} src={engine.logo} />,
+        }))}
+        imageSize={IMAGE_SIZE}
+      />
     </div>
   );
 };

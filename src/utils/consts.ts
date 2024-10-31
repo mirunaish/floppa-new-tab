@@ -1,15 +1,25 @@
-export const SearchEngines: Record<string, { name: string; url: string }> = {
+import googleLogo from "../assets/google-logo.svg";
+import startpageLogo from "../assets/startpage-logo.svg";
+import ddgLogo from "../assets/ddg-logo.svg";
+
+export const SearchEngines: Record<
+  string,
+  { name: string; url: string; logo: string }
+> = {
   google: {
     name: "Google",
     url: "https://www.google.com/search?q=",
+    logo: googleLogo,
   },
   startpage: {
     name: "StartPage",
     url: "https://www.startpage.com/do/dsearch?query=",
+    logo: startpageLogo,
   },
   ddg: {
     name: "DDG",
     url: "https://duckduckgo.com/?q=",
+    logo: ddgLogo,
   },
 };
 export const DEFAULT_ENGINE = "startpage";

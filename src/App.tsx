@@ -1,6 +1,7 @@
 import Card from "./components/Card";
 import Quote from "./components/Quote";
 import SearchBar from "./components/SearchBar";
+import ThemeSelector from "./components/Theme";
 import TodoList from "./components/TodoList";
 import { Images } from "./utils/consts";
 
@@ -16,6 +17,10 @@ function App() {
 
         <Card title="todolist" initialPosition={{ x: 50, y: 10 }}>
           <TodoList />
+        </Card>
+
+        <Card title="pick ur theme">
+          <ThemeSelector></ThemeSelector>
         </Card>
 
         {Object.entries(Images).map(([name, url], i) => (

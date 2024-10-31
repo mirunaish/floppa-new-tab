@@ -100,8 +100,17 @@ const Card: React.FC<CardProps> = ({
       >
         <div
           onMouseDown={handleMouseDown}
-          style={{ flexGrow: 1, cursor: "move", padding: "0.4rem 1rem" }}
+          style={{
+            flexGrow: 1,
+            cursor: "move",
+            padding: "0.4rem 1rem",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: "0.6rem",
+          }}
         >
+          <div className="theme-icon" />
           {title}
         </div>
         {buttons ? (
