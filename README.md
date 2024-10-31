@@ -1,6 +1,32 @@
 # Homepage
 
-widget board
+Widget board
+
+## Widgets
+
+Click and drag a widget's title bar to move it.
+
+### Search
+
+Select a search engine, type your query, and press enter to search.
+
+### To do List
+
+Add new todos and check off completed ones. They are stored in localStorage, so clearing cache or site data will delete them.
+
+### Daily quote
+
+A random quote every day. Click on the refresh button to get a new quote.
+
+### Images
+
+Nice cat images for your new tab.
+
+## Setup
+
+Hosted on render [here](https://widget-board.onrender.com/).
+
+Set Firefox's default homepage on new windows to https://widget-board.onrender.com/ and use [this extension](https://addons.mozilla.org/en-US/firefox/addon/new-tab-homepage/) to make it the default new tab too.
 
 ## Expanding the ESLint configuration
 
