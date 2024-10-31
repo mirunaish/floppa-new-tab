@@ -22,21 +22,22 @@ const TodoItem: React.FC<TodoItemProps> = ({
   removeTodo,
 }) => {
   return (
-    <div>
+    <div style={{ display: "flex", alignItems: "center" }}>
       <input type="checkbox" checked={done} onChange={() => toggleDone(id)} />
       <span
         style={{
           marginLeft: 5,
           color: done ? "var(--gray)" : "var(--black)",
           textDecoration: done ? "line-through" : "none",
+          flexGrow: 1,
         }}
       >
         {name}
       </span>
+
       <span
         onClick={() => removeTodo(id)}
         style={{
-          float: "right",
           cursor: "pointer",
           marginLeft: 10,
           color: "var(--gray)",

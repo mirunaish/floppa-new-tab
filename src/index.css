@@ -65,8 +65,39 @@ button:focus-visible {
 }
 
 input[type="checkbox"] {
-  border-color: var(--primary-dark);
+  appearance: none;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+
+  border: 2px solid var(--primary-dark);
+  border-radius: 4px;
+  transition:
+    background-color 0.25s,
+    box-shadow 0.25s;
 }
 input[type="checkbox"]:checked {
   background-color: var(--primary);
+}
+input[type="checkbox"]:focus {
+  box-shadow: 0 0 5px var(--primary);
+  outline: none;
+}
+
+input[type="text"] {
+  border: 2px solid var(--primary-dark);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 1em;
+  color: var(--black);
+  background-color: "white";
+  transition: box-shadow 0.25s;
+}
+input[type="text"]:focus {
+  box-shadow: 0 0 5px var(--primary);
+  outline: none;
+}
+input[type="text"]::placeholder {
+  color: var(--gray);
+  opacity: 0.75;
 }

@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import "./SearchBar.css";
 import { DEFAULT_ENGINE, SearchEngines } from "../utils/consts";
 import TextInput from "./TextInput";
 
@@ -37,12 +38,7 @@ const SearchBar: React.FC = () => {
             onClick={() => {
               setSearchEngine(id);
             }}
-            style={{
-              backgroundColor:
-                id === searchEngine ? "var(--primary)" : "transparent",
-              borderRadius: 20,
-              display: "flex",
-            }}
+            className={"bubble" + (id === searchEngine ? " selected" : "")}
           >
             <img
               style={{ ...IMAGE_SIZE, margin: 5, padding: 0 }}
