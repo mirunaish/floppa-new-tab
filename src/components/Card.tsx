@@ -80,6 +80,8 @@ const Card: React.FC<CardProps> = ({
     };
   }, [handleMouseMove, handleMouseUp, isMoving]);
 
+  const [minimized, setMinimized] = useState(false);
+
   return (
     <div
       className="card"
@@ -122,14 +124,24 @@ const Card: React.FC<CardProps> = ({
             gap: "0.6rem",
           }}
         >
-          <FaMinus style={{ cursor: "pointer" }} />
+          <FaMinus
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              setMinimized(!minimized);
+            }}
+          />
           <FaRegSquare style={{ cursor: "pointer" }} />
           <FaX style={{ cursor: "pointer" }} />
         </div>
       </div>
+
       <div
         className="card__body"
-        style={{ display: "flex", padding: padding ? "0.6rem 1rem" : 0 }}
+        style={{
+          display: "flex",
+          padding: padding ? (minimized ? "0rem 1rem" : "0.6rem 1rem") : 0,
+          height: minimized ? 0 : "auto",
+        }}
       >
         {children}
       </div>

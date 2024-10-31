@@ -25,7 +25,7 @@ function App() {
             initialPosition={{ x: i * 50, y: 10 }}
             padding={false}
           >
-            <img src={url} style={{ maxWidth: 300, height: "auto" }} />
+            <img src={url} style={{ width: 300, height: "auto" }} />
           </Card>
         ))}
       </div>
