@@ -2,6 +2,8 @@
 
 Widget board
 
+![Widget Board](images/homepage.png)
+
 ## Widgets
 
 Click and drag a widget's title bar to move it.
