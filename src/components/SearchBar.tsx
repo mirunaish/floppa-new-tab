@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { DEFAULT_ENGINE, SearchEngines } from "../consts";
+import { DEFAULT_ENGINE, SearchEngines } from "../utils/consts";
 import TextInput from "./TextInput";
 
 const SearchBar: React.FC = () => {

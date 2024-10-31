@@ -25,7 +25,6 @@ const TodoItem: React.FC<TodoItemProps> = ({
     <div>
       <input type="checkbox" checked={done} onChange={() => toggleDone(id)} />
       <span
-        key={id}
         style={{
           marginLeft: 5,
           color: done ? "var(--gray)" : "var(--black)",
@@ -86,7 +85,12 @@ const TodoList: React.FC = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
       {todoList.map((todo) => (
-        <TodoItem {...todo} removeTodo={removeTodo} toggleDone={toggleDone} />
+        <TodoItem
+          {...todo}
+          key={todo.id}
+          removeTodo={removeTodo}
+          toggleDone={toggleDone}
+        />
       ))}
       <div
         style={{

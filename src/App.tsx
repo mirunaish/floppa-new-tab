@@ -10,9 +10,9 @@ function App() {
         <Card title="search" initialPosition={{ x: 10, y: 50 }}>
           <SearchBar />
         </Card>
-        <Card title="quote" initialPosition={{ x: 50, y: 10 }}>
-          <Quote />
-        </Card>
+
+        <Quote />
+
         <Card title="todolist" initialPosition={{ x: 50, y: 10 }}>
           <TodoList />
         </Card>

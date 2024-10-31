@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState, ReactNode } from "react";
 import "./Card.css";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { Coords } from "../types";
+import { Coords } from "../utils/types";
 import { FaMinus } from "react-icons/fa6";
 import { FaRegSquare } from "react-icons/fa6";
 import { FaX } from "react-icons/fa6";
@@ -10,12 +10,14 @@ interface CardProps {
   title: string;
   children: ReactNode;
   initialPosition?: Coords;
+  buttons?: () => ReactNode;
 }
 
 const Card: React.FC<CardProps> = ({
   title,
   children,
   initialPosition = { x: 100, y: 100 },
+  buttons,
 }) => {
   // position stored in local storage
   const [position, setPosition] = useLocalStorage(
@@ -98,6 +100,18 @@ const Card: React.FC<CardProps> = ({
         >
           {title}
         </div>
+        {buttons ? (
+          <div
+            style={{
+              padding: "0.4rem 0.6rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.6rem",
+            }}
+          >
+            {buttons()}
+          </div>
+        ) : null}
         <div
           style={{
             padding: "0.4rem 0.6rem",
