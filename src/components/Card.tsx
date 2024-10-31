@@ -80,7 +80,10 @@ const Card: React.FC<CardProps> = ({
     };
   }, [handleMouseMove, handleMouseUp, isMoving]);
 
-  const [minimized, setMinimized] = useState(false);
+  const [minimized, setMinimized] = useLocalStorage(
+    `${title}-minimized`,
+    false
+  );
 
   return (
     <div
