@@ -11,7 +11,7 @@ const Quote: React.FC = () => {
       <span style={{ fontFamily: "Tangerine", fontSize: "2em" }}>
         "{quote.quote}"
       </span>
-      <span style={{ color: "gray" }}> - {quote.author}</span>
+      <span style={{ color: "var(--gray)" }}> - {quote.author}</span>
     </div>
   );
 };

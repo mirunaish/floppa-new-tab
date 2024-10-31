@@ -28,7 +28,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
         key={id}
         style={{
           marginLeft: 5,
-          color: done ? "gray" : "black",
+          color: done ? "var(--gray)" : "var(--black)",
           textDecoration: done ? "line-through" : "none",
         }}
       >
