@@ -1,5 +1,5 @@
 import bingusIcon from "../assets/Bingus.webp";
-import floppaLogo from "../assets/Pet_floppa.webp";
+import floppaIcon from "../assets/Pet_floppa.webp";
 
 export enum ThemeTypes {
   DARK = "dark",
@@ -53,18 +53,18 @@ export const Colors: Record<Themes, Record<ThemeTypes, Theme>> = {
       textAlt: "#666666",
     },
     [ThemeTypes.LIGHT]: {
-      primary: "#ffffff",
-      primaryAlt: "#eeeeee",
-      secondary: "#dddddd",
-      background: "#cccccc",
-      backgroundAlt: "#bbbbbb",
-      text: "#aaaaaa",
-      textAlt: "#999999",
+      primary: "#f294bd",
+      primaryAlt: "#c75f8d",
+      secondary: "#5e30ba",
+      background: "#ffebf3",
+      backgroundAlt: "#ffffff",
+      text: "#5e3044",
+      textAlt: "#a85e7e",
     },
   },
 };
 
 export const ThemeIcons: Record<Themes, string> = {
-  [Themes.FLOPPA]: floppaLogo,
+  [Themes.FLOPPA]: floppaIcon,
   [Themes.BINGUS]: bingusIcon,
 };

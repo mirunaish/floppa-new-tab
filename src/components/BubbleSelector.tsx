@@ -1,4 +1,5 @@
 import { CSSProperties, ReactNode } from "react";
+import "./BubbleSelector.css";
 
 interface BubbleSelectorProps {
   value: string;

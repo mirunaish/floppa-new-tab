@@ -25,9 +25,9 @@ const TodoItem: React.FC<TodoItemProps> = ({
     <div style={{ display: "flex", alignItems: "center" }}>
       <input type="checkbox" checked={done} onChange={() => toggleDone(id)} />
       <span
+        className={done ? "alt-text" : ""}
         style={{
           marginLeft: 5,
-          color: done ? "var(--gray)" : "var(--black)",
           textDecoration: done ? "line-through" : "none",
           flexGrow: 1,
         }}
@@ -37,10 +37,10 @@ const TodoItem: React.FC<TodoItemProps> = ({
 
       <span
         onClick={() => removeTodo(id)}
+        className="alt-text"
         style={{
           cursor: "pointer",
           marginLeft: 10,
-          color: "var(--gray)",
         }}
       >
         <FaX />

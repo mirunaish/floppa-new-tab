@@ -11,7 +11,7 @@
     border-color 0.25s;
 }
 .bubble.selected {
-  background-color: white;
+  background-color: var(--backgroundAlt);
   border-color: var(--primary);
 }
 .bubble:hover {

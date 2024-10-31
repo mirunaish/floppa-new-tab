@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from "react";
-import "./SearchBar.css";
 import { DEFAULT_ENGINE, SearchEngines } from "../utils/consts";
 import TextInput from "./TextInput";
 import BubbleSelector from "./BubbleSelector";

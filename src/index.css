@@ -17,13 +17,13 @@
   background-size: cover;
 
   --primary: #f294bd;
-  --primary-dark: #c75f8d;
+  --primaryAlt: #c75f8d;
   --secondary: #5e30ba;
-  --secondary-dark: #3a1f7b;
+  --secondaryAlt: #3a1f7b;
   --background: #ffebf3;
-  --white: #ffebf3;
-  --gray: #a85e7e;
-  --black: #5e3044;
+  --backgroundAlt: #ffebf3;
+  --text: #5e3044;
+  --textAlt: #a85e7e;
 
   --icon: url("assets/Bingus.webp");
 }
@@ -34,7 +34,7 @@ a {
   text-decoration: inherit;
 }
 a:hover {
-  color: var(--secondary-dark);
+  color: var(--secondaryAlt);
 }
 
 body {
@@ -56,14 +56,16 @@ button {
   padding: 5px 10px;
   background-color: var(--primary);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition:
+    border-color 0.25s,
+    background-color 0.25s;
 }
 button:hover {
-  border-color: var(--primary-dark);
+  border-color: var(--primaryAlt);
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: none;
 }
 
 input[type="checkbox"] {
@@ -72,11 +74,12 @@ input[type="checkbox"] {
   width: 18px;
   height: 18px;
 
-  border: 2px solid var(--primary-dark);
+  border: 2px solid var(--primaryAlt);
   border-radius: 4px;
   transition:
     background-color 0.25s,
-    box-shadow 0.25s;
+    box-shadow 0.25s,
+    border-color 0.25s;
 }
 input[type="checkbox"]:checked {
   background-color: var(--primary);
@@ -87,21 +90,30 @@ input[type="checkbox"]:focus {
 }
 
 input[type="text"] {
-  border: 2px solid var(--primary-dark);
+  border: 2px solid var(--primaryAlt);
   border-radius: 4px;
   padding: 4px 8px;
   font-size: 1em;
-  color: var(--black);
-  background-color: "white";
-  transition: box-shadow 0.25s;
+  color: var(--text);
+  background-color: var(--backgroundAlt);
+  transition:
+    box-shadow 0.25s,
+    color 0.25s,
+    background-color 0.25s,
+    border-color 0.25s;
 }
 input[type="text"]:focus {
   box-shadow: 0 0 5px var(--primary);
   outline: none;
 }
 input[type="text"]::placeholder {
-  color: var(--gray);
+  color: var(--textAlt);
   opacity: 0.75;
+}
+
+.alt-text {
+  color: var(--textAlt);
+  transition: color 0.25s;
 }
 
 .theme-icon {
