@@ -39,7 +39,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
           float: "right",
           cursor: "pointer",
           marginLeft: 10,
-          color: "gray",
+          color: "var(--gray)",
         }}
       >
         <FaX />
