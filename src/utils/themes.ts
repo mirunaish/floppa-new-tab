@@ -1,5 +1,7 @@
 import bingusIcon from "../assets/Bingus.webp";
 import floppaIcon from "../assets/Pet_floppa.webp";
+import floppaBackground from "../assets/floppa-bg.jpg";
+import bingusBackground from "../assets/bg.jpg";
 
 export enum ThemeTypes {
   DARK = "dark",
@@ -19,6 +21,7 @@ export interface Theme {
   backgroundAlt: string;
   text: string;
   textAlt: string;
+  backgroundImage: string;
 }
 
 export const Colors: Record<Themes, Record<ThemeTypes, Theme>> = {
@@ -31,6 +34,7 @@ export const Colors: Record<Themes, Record<ThemeTypes, Theme>> = {
       backgroundAlt: "#444444",
       text: "#555555",
       textAlt: "#666666",
+      backgroundImage: `url(${floppaBackground})`,
     },
     [ThemeTypes.LIGHT]: {
       primary: "#ffffff",
@@ -40,6 +44,7 @@ export const Colors: Record<Themes, Record<ThemeTypes, Theme>> = {
       backgroundAlt: "#bbbbbb",
       text: "#aaaaaa",
       textAlt: "#999999",
+      backgroundImage: `url(${floppaBackground})`,
     },
   },
   [Themes.BINGUS]: {
@@ -51,6 +56,7 @@ export const Colors: Record<Themes, Record<ThemeTypes, Theme>> = {
       backgroundAlt: "#444444",
       text: "#555555",
       textAlt: "#666666",
+      backgroundImage: `url(${bingusBackground})`,
     },
     [ThemeTypes.LIGHT]: {
       primary: "#f294bd",
@@ -60,6 +66,7 @@ export const Colors: Record<Themes, Record<ThemeTypes, Theme>> = {
       backgroundAlt: "#ffffff",
       text: "#5e3044",
       textAlt: "#a85e7e",
+      backgroundImage: `url(${bingusBackground})`,
     },
   },
 };

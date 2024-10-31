@@ -13,7 +13,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  background-image: url("assets/bg.jpg");
+  background-image: var(--backgroundImage);
   background-size: cover;
 
   --primary: #f294bd;
@@ -26,6 +26,7 @@
   --textAlt: #a85e7e;
 
   --icon: url("assets/Bingus.webp");
+  --backgroundImage: url("assets/bg.jpg");
 }
 
 a {
