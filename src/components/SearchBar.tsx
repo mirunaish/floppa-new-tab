@@ -32,7 +32,7 @@ const SearchBar: React.FC = () => {
           marginTop: 8,
         }}
       >
-        {Object.entries(SearchEngines).map(([id, engine]) => (
+        {Object.keys(SearchEngines).map((id) => (
           <div
             key={id}
             onClick={() => {
@@ -40,10 +40,9 @@ const SearchBar: React.FC = () => {
             }}
             className={"bubble" + (id === searchEngine ? " selected" : "")}
           >
-            <img
+            <div
+              className={id}
               style={{ ...IMAGE_SIZE, margin: 5, padding: 0 }}
-              src={engine.logo}
-              alt={engine.name}
             />
           </div>
         ))}

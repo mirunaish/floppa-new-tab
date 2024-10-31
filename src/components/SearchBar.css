@@ -17,3 +17,16 @@
 .bubble:hover {
   box-shadow: 0 0 5px var(--primary);
 }
+
+.google {
+  background-image: url("../assets/google-logo.svg");
+  background-size: cover;
+}
+.ddg {
+  background-image: url("../assets/ddg-logo.svg");
+  background-size: cover;
+}
+.startpage {
+  background-image: url("../assets/startpage-logo.svg");
+  background-size: cover;
+}
