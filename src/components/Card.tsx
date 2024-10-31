@@ -11,6 +11,7 @@ interface CardProps {
   children: ReactNode;
   initialPosition?: Coords;
   buttons?: () => ReactNode;
+  padding?: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -18,6 +19,7 @@ const Card: React.FC<CardProps> = ({
   children,
   initialPosition = { x: 100, y: 100 },
   buttons,
+  padding = true,
 }) => {
   // position stored in local storage
   const [position, setPosition] = useLocalStorage(
@@ -125,7 +127,12 @@ const Card: React.FC<CardProps> = ({
           <FaX style={{ cursor: "pointer" }} />
         </div>
       </div>
-      <div className="card__body">{children}</div>
+      <div
+        className="card__body"
+        style={{ display: "flex", padding: padding ? "0.6rem 1rem" : 0 }}
+      >
+        {children}
+      </div>
     </div>
   );
 };
