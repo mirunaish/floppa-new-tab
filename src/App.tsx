@@ -1,38 +1,76 @@
-import Card from "./components/Card";
+import { useCallback } from "react";
+import { useLocalStorage } from "./hooks/useLocalStorage";
+import { CardComponentProps } from "./components/Card";
 import Quote from "./components/Quote";
 import SearchBar from "./components/SearchBar";
-import ThemeSelector from "./components/Theme";
+import ThemeSelector from "./components/ThemeSelector";
 import TodoList from "./components/TodoList";
-import { Images } from "./utils/consts";
+import { FaList, FaPalette, FaQuoteRight } from "react-icons/fa6";
+import { FaSearch } from "react-icons/fa";
+import TaskBar from "./components/TaskBar";
+
+const WIDGETS: Record<
+  string,
+  { component: React.FC<CardComponentProps>; icon: React.FC }
+> = {
+  searchBar: {
+    component: (props: CardComponentProps) => (
+      <SearchBar key={props.id} {...props} />
+    ),
+    icon: FaSearch,
+  },
+  todoList: {
+    component: (props: CardComponentProps) => (
+      <TodoList key={props.id} {...props} />
+    ),
+    icon: FaList,
+  },
+  quote: {
+    component: (props: CardComponentProps) => (
+      <Quote key={props.id} {...props} />
+    ),
+    icon: FaQuoteRight,
+  },
+  themeSelector: {
+    component: (props: CardComponentProps) => (
+      <ThemeSelector key={props.id} {...props} />
+    ),
+    icon: FaPalette,
+  },
+};
 
 function App() {
+  const [visible, setVisible] = useLocalStorage<Record<string, boolean>>(
+    "widgets-visible",
+    {
+      searchBar: true,
+      todoList: true,
+      quote: true,
+      themeSelector: false,
+    }
+  );
+  const toggleVisible = useCallback(
+    (id: string) => {
+      setVisible({ ...visible, [id]: !visible[id] });
+    },
+    [setVisible, visible]
+  );
+
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "row" }}>
-        <Card title="search" initialPosition={{ x: 10, y: 50 }}>
-          <SearchBar />
-        </Card>
+      <div>
+        {Object.entries(WIDGETS)
+          .filter(([id]) => visible[id])
+          .map(([id, { component }]) =>
+            component({ id, close: toggleVisible, visible: visible[id] })
+          )}
 
-        <Quote />
-
-        <Card title="todolist" initialPosition={{ x: 50, y: 10 }}>
-          <TodoList />
-        </Card>
-
-        <Card title="pick ur theme">
-          <ThemeSelector></ThemeSelector>
-        </Card>
-
-        {Object.entries(Images).map(([name, url], i) => (
-          <Card
-            key={name}
-            title={name}
-            initialPosition={{ x: i * 50, y: 10 }}
-            padding={false}
-          >
-            <img src={url} style={{ width: 300, height: "auto" }} />
-          </Card>
-        ))}
+        <TaskBar
+          widgets={Object.entries(WIDGETS)
+            .filter(([id]) => !visible[id])
+            .map(([id, { icon }]) => ({ id, icon }))}
+          open={toggleVisible}
+        />
       </div>
     </>
   );

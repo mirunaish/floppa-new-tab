@@ -1,0 +1,26 @@
+.taskbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+
+  border-radius: 8px;
+  padding: 10px 15px;
+  background-color: var(--primaryAltTransparent);
+  color: var(--text);
+
+  transition:
+    background-color 0.25s,
+    color 0.25s;
+}
+
+.taskbar__task {
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  background-color: var(--primary);
+  display: flex;
+  padding: 8px;
+  transition: background-color 0.25s;
+}

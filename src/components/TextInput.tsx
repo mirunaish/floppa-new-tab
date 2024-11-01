@@ -1,30 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 
 interface TextInputProps {
-  onEnter: (value: string) => void;
+  value: string;
+  onChange: (value: string) => void;
   placeholder?: string;
-  initialValue?: string;
 }
 
+/** normal text input */
 const TextInput: React.FC<TextInputProps> = ({
-  onEnter,
+  value,
+  onChange,
   placeholder,
-  initialValue,
 }) => {
-  const [value, setValue] = useState(initialValue ?? "");
-
   return (
     <input
       type="text"
       placeholder={placeholder}
       value={value}
-      onChange={(e) => setValue(e.target.value)}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") {
-          onEnter(value);
-          setValue("");
-        }
-      }}
+      onChange={(e) => onChange(e.target.value)}
     />
   );
 };

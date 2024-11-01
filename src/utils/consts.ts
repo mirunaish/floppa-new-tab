@@ -2,7 +2,7 @@ import googleLogo from "../assets/google-logo.svg";
 import startpageLogo from "../assets/startpage-logo.svg";
 import ddgLogo from "../assets/ddg-logo.svg";
 
-export const SearchEngines: Record<
+export const SEARCH_ENGINES: Record<
   string,
   { name: string; url: string; logo: string }
 > = {

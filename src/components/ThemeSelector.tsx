@@ -3,8 +3,9 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Colors, ThemeIcons, Themes, ThemeTypes } from "../utils/themes";
 import BubbleSelector from "./BubbleSelector";
 import { useCallback, useEffect } from "react";
+import Card, { CardComponentProps } from "./Card";
 
-const ThemeSelector: React.FC = () => {
+const ThemeSelector: React.FC<CardComponentProps> = ({ id, close }) => {
   const [theme, setTheme] = useLocalStorage("theme", Themes.FLOPPA);
   const [themeType, setThemeType] = useLocalStorage(
     "themeType",
@@ -36,37 +37,39 @@ const ThemeSelector: React.FC = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 10,
-        width: "100%",
-      }}
-    >
-      <BubbleSelector
-        value={theme}
-        onChange={(value) => onChange(value as Themes, themeType)}
-        options={Object.values(Themes).map((themeName) => ({
-          id: themeName,
-          image: (props) => <img {...props} src={ThemeIcons[themeName]} />,
-        }))}
-        imageSize={{ width: 50, height: 50 }}
-      />
+    <Card id={id} title="pick your theme" close={close}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 10,
+          width: "100%",
+        }}
+      >
+        <BubbleSelector
+          value={theme}
+          onChange={(value) => onChange(value as Themes, themeType)}
+          options={Object.values(Themes).map((themeName) => ({
+            id: themeName,
+            image: (props) => <img {...props} src={ThemeIcons[themeName]} />,
+          }))}
+          imageSize={{ width: 50, height: 50 }}
+        />
 
-      <BubbleSelector
-        value={themeType}
-        onChange={(value) => onChange(theme, value as ThemeTypes)}
-        options={Object.values(ThemeTypes).map((themeTypeName) => ({
-          id: themeTypeName,
-          image:
-            themeTypeName === ThemeTypes.DARK
-              ? (props) => <FaMoon size={20} {...props} />
-              : (props) => <FaRegSun size={20} {...props} />,
-        }))}
-      />
-    </div>
+        <BubbleSelector
+          value={themeType}
+          onChange={(value) => onChange(theme, value as ThemeTypes)}
+          options={Object.values(ThemeTypes).map((themeTypeName) => ({
+            id: themeTypeName,
+            image:
+              themeTypeName === ThemeTypes.DARK
+                ? (props) => <FaMoon size={20} {...props} />
+                : (props) => <FaRegSun size={20} {...props} />,
+          }))}
+        />
+      </div>
+    </Card>
   );
 };
 

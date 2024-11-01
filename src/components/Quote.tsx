@@ -2,13 +2,13 @@ import React, { useMemo } from "react";
 import initialQuotes from "../assets/quotes.json";
 import { useDailyRandom } from "../hooks/useDailyRandom";
 import { FaRotateRight, FaUpload } from "react-icons/fa6";
-import Card from "./Card";
+import Card, { CardComponentProps } from "./Card";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
-const Quote: React.FC = () => {
+const Quote: React.FC<CardComponentProps> = ({ id, close }) => {
   const [quotes, setQuotes] = useLocalStorage("quotes", initialQuotes);
 
-  const [quoteIndex, refreshQuote] = useDailyRandom("quote", {
+  const [quoteIndex, refreshQuote] = useDailyRandom(id, {
     min: 0,
     max: quotes.length,
   });
@@ -41,8 +41,9 @@ const Quote: React.FC = () => {
 
   return (
     <Card
+      id={id}
       title="your daily quote"
-      initialPosition={{ x: 50, y: 10 }}
+      close={close}
       buttons={() => (
         <>
           <FaUpload
@@ -53,7 +54,7 @@ const Quote: React.FC = () => {
         </>
       )}
     >
-      <div style={{ alignItems: "baseline", maxWidth: 1000 }}>
+      <div style={{ maxWidth: 1000 }}>
         <span style={{ fontFamily: "Tangerine", fontSize: "2em" }}>
           "{quote.quote}"
         </span>

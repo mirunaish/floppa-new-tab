@@ -6,26 +6,35 @@ import { FaMinus } from "react-icons/fa6";
 import { FaRegSquare } from "react-icons/fa6";
 import { FaX } from "react-icons/fa6";
 
+// props of component that uses card
+export interface CardComponentProps {
+  id: string;
+  close: (id: string) => void;
+  visible: boolean;
+}
+
 interface CardProps {
+  id: string;
   title: string;
   children: ReactNode;
-  initialPosition?: Coords;
   buttons?: () => ReactNode;
   padding?: boolean;
+  close?: (id: string) => void;
 }
 
 const Card: React.FC<CardProps> = ({
+  id,
   title,
   children,
-  initialPosition = { x: 100, y: 100 },
   buttons,
   padding = true,
+  close,
 }) => {
   // position stored in local storage
-  const [position, setPosition] = useLocalStorage(
-    `${title}-position`,
-    initialPosition
-  );
+  const [position, setPosition] = useLocalStorage(`${id}-position`, {
+    x: 100,
+    y: 100,
+  });
 
   const [isMoving, setIsMoving] = useState(false); // am i dragging the card?
   const [clickPosition, setClickPosition] = useState({ x: 0, y: 0 }); // where in the div i clicked
@@ -80,10 +89,7 @@ const Card: React.FC<CardProps> = ({
     };
   }, [handleMouseMove, handleMouseUp, isMoving]);
 
-  const [minimized, setMinimized] = useLocalStorage(
-    `${title}-minimized`,
-    false
-  );
+  const [minimized, setMinimized] = useLocalStorage(`${id}-minimized`, false);
 
   return (
     <div
@@ -143,7 +149,10 @@ const Card: React.FC<CardProps> = ({
             }}
           />
           <FaRegSquare style={{ cursor: "pointer" }} />
-          <FaX style={{ cursor: "pointer" }} />
+          <FaX
+            style={{ cursor: "pointer" }}
+            onClick={close ? () => close(id) : () => {}}
+          />
         </div>
       </div>
 

@@ -1,7 +1,8 @@
 import React, { useCallback } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import TextInput from "./TextInput";
+import TextInputButton from "./TextInputButton";
 import { FaPlus, FaX } from "react-icons/fa6";
+import Card, { CardComponentProps } from "./Card";
 
 interface Todo {
   id: string;
@@ -49,7 +50,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
   );
 };
 
-const TodoList: React.FC = () => {
+const TodoList: React.FC<CardComponentProps> = ({ id, close }) => {
   const [todoList, setTodoList] = useLocalStorage<Todo[]>("todoList", []);
 
   const addTodo = useCallback(
@@ -84,28 +85,30 @@ const TodoList: React.FC = () => {
   );
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-      {todoList.map((todo) => (
-        <TodoItem
-          {...todo}
-          key={todo.id}
-          removeTodo={removeTodo}
-          toggleDone={toggleDone}
-        />
-      ))}
-      <div
-        style={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 5,
-        }}
-      >
-        <FaPlus style={{ margin: 4 }} />
-        <TextInput placeholder="add new..." onEnter={addTodo} />
+    <Card id={id} title="todo list" close={close}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        {todoList.map((todo) => (
+          <TodoItem
+            {...todo}
+            key={todo.id}
+            removeTodo={removeTodo}
+            toggleDone={toggleDone}
+          />
+        ))}
+        <div
+          style={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 5,
+          }}
+        >
+          <FaPlus style={{ margin: 4 }} />
+          <TextInputButton placeholder="add new..." onEnter={addTodo} />
+        </div>
       </div>
-    </div>
+    </Card>
   );
 };
 
