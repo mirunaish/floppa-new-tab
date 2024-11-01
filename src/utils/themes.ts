@@ -1,7 +1,9 @@
 import bingusIcon from "../assets/Bingus.webp";
 import floppaIcon from "../assets/Pet_floppa.webp";
 import floppaBackground from "../assets/floppa-bg.jpg";
-import bingusBackground from "../assets/bg.jpg";
+import floppaDarkBackground from "../assets/floppa-dark.png";
+import bingusBackground from "../assets/bingus-bg.jpg";
+import bingusDarkBackground from "../assets/bingus-bg-dark.jpg";
 
 export enum ThemeTypes {
   DARK = "dark",
@@ -27,43 +29,43 @@ export interface Theme {
 export const Colors: Record<Themes, Record<ThemeTypes, Theme>> = {
   [Themes.FLOPPA]: {
     [ThemeTypes.DARK]: {
-      primary: "#000000",
-      primaryAlt: "#111111",
-      secondary: "#222222",
-      background: "#333333",
-      backgroundAlt: "#444444",
-      text: "#555555",
-      textAlt: "#666666",
-      backgroundImage: `url(${floppaBackground})`,
+      primary: "#753A22",
+      primaryAlt: "#572612",
+      secondary: "#228B22",
+      background: "#260C01",
+      backgroundAlt: "#4F1802",
+      text: "#F7E3D4",
+      textAlt: "#C9AF9D",
+      backgroundImage: `url(${floppaDarkBackground})`,
     },
     [ThemeTypes.LIGHT]: {
-      primary: "#ffffff",
-      primaryAlt: "#eeeeee",
-      secondary: "#dddddd",
-      background: "#cccccc",
-      backgroundAlt: "#bbbbbb",
-      text: "#aaaaaa",
-      textAlt: "#999999",
+      primary: "#A86D58",
+      primaryAlt: "#8F513B",
+      secondary: "#228B22",
+      background: "#FAE9DE",
+      backgroundAlt: "#FFF9F5",
+      text: "#4D2618",
+      textAlt: "#996856",
       backgroundImage: `url(${floppaBackground})`,
     },
   },
   [Themes.BINGUS]: {
     [ThemeTypes.DARK]: {
-      primary: "#000000",
-      primaryAlt: "#111111",
-      secondary: "#222222",
-      background: "#333333",
-      backgroundAlt: "#444444",
-      text: "#555555",
-      textAlt: "#666666",
-      backgroundImage: `url(${bingusBackground})`,
+      primary: "#9C3D61",
+      primaryAlt: "#662840",
+      secondary: "#5e30ba",
+      background: "#361129",
+      backgroundAlt: "#52103B",
+      text: "#FFDEEB",
+      textAlt: "#C49BAB",
+      backgroundImage: `url(${bingusDarkBackground})`,
     },
     [ThemeTypes.LIGHT]: {
       primary: "#f294bd",
       primaryAlt: "#c75f8d",
       secondary: "#5e30ba",
       background: "#ffebf3",
-      backgroundAlt: "#ffffff",
+      backgroundAlt: "#FFFAFC",
       text: "#5e3044",
       textAlt: "#a85e7e",
       backgroundImage: `url(${bingusBackground})`,

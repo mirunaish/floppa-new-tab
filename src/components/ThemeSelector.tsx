@@ -24,7 +24,13 @@ const ThemeSelector: React.FC<CardComponentProps> = ({ id, close }) => {
         root.style.setProperty(`--${key}`, value);
       });
 
-      // also change icon
+      // also change primaryAltTransparent
+      root.style.setProperty(
+        "--primaryAltTransparent",
+        `${colors.primaryAlt}99`
+      );
+
+      // and also change icon
       root.style.setProperty(`--icon`, `url(${ThemeIcons[newTheme]})`);
     },
     [setTheme, setThemeType, theme, themeType]

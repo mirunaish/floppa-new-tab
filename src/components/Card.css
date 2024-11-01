@@ -2,7 +2,7 @@
   background-color: var(--background);
   color: var(--text);
   border-radius: 8px;
-  border: 1px solid var(--text);
+  border: 1px solid var(--primary);
   margin: 10px;
   overflow: hidden;
 
