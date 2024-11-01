@@ -1,12 +1,14 @@
-# Homepage
+# Floppa Home
 
-Widget board
+Floppa's widget board
 
 ![Widget Board](images/homepage.png)
 
 ## Widgets
 
-Click and drag a widget's title bar to move it.
+Click and drag a widget's title bar to move it. Minimize widgets by pressing
+the - button, or close them by pressing the X. Closed widgets can be reopened by
+clicking on the icon in the taskbar.
 
 ### Search
 
@@ -19,12 +21,18 @@ so clearing cache or site data will delete them.
 
 ### Daily quote
 
-A random quote every day. Click on the refresh button to get a new quote. Click on the upload button to
-upload a JSON with custom quotes.
+A random quote every day. Click on the refresh button to get a new quote. Click
+on the upload button to upload a JSON with custom quotes. Like Todos, these are
+stored in localStorage, so make sure to keep a backup.
 
-### Images
+### New images
 
-Nice cat images for your new tab.
+Add nice cat images or GIFs for your new tab.
+
+### Theme selector
+
+Choose a cat themed color scheme for your widgets. Pick between light and dark
+modes.
 
 ## Setup
 

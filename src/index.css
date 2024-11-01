@@ -54,19 +54,27 @@ h1 {
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 5px 10px;
+  border: 2px solid transparent;
+  padding: 4px 20px;
   background-color: var(--primary);
+  color: var(--text);
   cursor: pointer;
+  width: fit-content;
+  font-size: 1em;
   transition:
+    color 0.25s,
     border-color 0.25s,
-    background-color 0.25s;
+    background-color 0.25s,
+    box-shadow 0.25s;
 }
 button:hover {
   border-color: var(--primaryAlt);
+  box-shadow: 0 0 5px var(--primaryAlt);
 }
 button:focus,
 button:focus-visible {
+  border-color: var(--primaryAlt);
+  box-shadow: 0 0 5px var(--primary);
   outline: none;
 }
 
@@ -92,6 +100,8 @@ input[type="checkbox"]:focus {
 }
 
 input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
   border: 2px solid var(--primaryAlt);
   border-radius: 4px;
   padding: 4px 8px;
