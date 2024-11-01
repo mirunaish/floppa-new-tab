@@ -20,15 +20,15 @@ export function useDailyRandom(
     date: today,
   });
 
-  // if the date has changed, generate a new random number
-  useEffect(() => {
-    if (random.date != today) setRandom({ number: Math.random(), date: today });
-  }, [random, setRandom, today]);
-
   // on user request, get a new random number today
   const refresh = useCallback(() => {
     setRandom({ number: generateRandom(range), date: today });
   }, [range, setRandom, today]);
+
+  // if the date has changed, generate a new random number
+  useEffect(() => {
+    if (random.date != today) refresh();
+  }, [random, refresh, today]);
 
   return [random.number, refresh];
 }
