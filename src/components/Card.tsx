@@ -134,9 +134,9 @@ const Card: React.FC<CardProps> = ({
         left: movingPosition.x,
 
         width: resizingSize.width,
-        height: resizeable == "ew" ? "auto" : resizingSize.height,
+        height: resizeable == "ew" || minimized ? "auto" : resizingSize.height,
         minWidth: "min-content",
-        minHeight: 100,
+        minHeight: minimized ? 0 : 100,
 
         display: "flex",
         flexDirection: "column",
@@ -212,7 +212,7 @@ const Card: React.FC<CardProps> = ({
         style={{
           display: "flex",
           padding: padding ? (minimized ? "0rem 1rem" : "0.6rem 1rem") : 0,
-          height: "100%",
+          height: minimized ? 0 : "100%",
         }}
       >
         {children}
