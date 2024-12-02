@@ -6,9 +6,16 @@ import SearchBar from "./components/SearchBar";
 import ThemeSelector from "./components/ThemeSelector";
 import TodoList from "./components/TodoList";
 import NewImage from "./components/NewImage";
-import { FaImage, FaList, FaPalette, FaQuoteRight } from "react-icons/fa6";
+import {
+  FaImage,
+  FaList,
+  FaPalette,
+  FaPen,
+  FaQuoteRight,
+} from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import TaskBar from "./components/TaskBar";
+import NewNote from "./components/NewNote";
 
 const WIDGETS: Record<
   string,
@@ -44,6 +51,12 @@ const WIDGETS: Record<
     ),
     icon: FaImage,
   },
+  newNote: {
+    component: (props: CardComponentProps) => (
+      <NewNote key={props.id} {...props} />
+    ),
+    icon: FaPen,
+  },
 };
 
 function App() {
@@ -55,6 +68,7 @@ function App() {
       quote: true,
       themeSelector: false,
       newImage: false,
+      newNote: false,
     }
   );
   const toggleVisible = useCallback(

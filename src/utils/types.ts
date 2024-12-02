@@ -13,3 +13,9 @@ export interface ImageInfo {
   title: string;
   url: string;
 }
+
+export interface NoteInfo {
+  id: string;
+  title: string;
+  text: string;
+}
