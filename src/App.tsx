@@ -82,7 +82,7 @@ function App() {
     <>
       <div>
         {Object.entries(WIDGETS)
-          .filter(([id]) => visible[id] || id == "newImage")
+          .filter(([id]) => visible[id] || id == "newImage" || id == "newNote")
           .map(([id, { component }]) =>
             component({ id, close: toggleVisible, visible: visible[id] })
           )}
