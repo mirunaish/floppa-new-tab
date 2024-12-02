@@ -69,8 +69,10 @@ const NewImage: React.FC<CardComponentProps> = ({ id, close, visible }) => {
           title={image.title}
           padding={false}
           close={() => removeImage(id)}
+          initialSize={{ width: 300, height: "auto" }}
+          resizeable="ew"
         >
-          <img src={image.url} style={{ width: 300, height: "auto" }} />
+          <img src={image.url} style={{ width: "100%", height: "100%" }} />
         </Card>
       ))}
     </>

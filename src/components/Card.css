@@ -20,3 +20,7 @@
     color 0.25s,
     background-color 0.25s;
 }
+
+.card__body {
+  overflow-y: scroll;
+}

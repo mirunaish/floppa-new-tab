@@ -4,6 +4,7 @@ interface TextInputProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  style?: React.CSSProperties;
   long?: boolean;
 }
 
@@ -12,6 +13,7 @@ const TextInput: React.FC<TextInputProps> = ({
   value,
   onChange,
   placeholder,
+  style = {},
   long = false,
 }) => {
   return long ? (
@@ -19,6 +21,7 @@ const TextInput: React.FC<TextInputProps> = ({
       placeholder={placeholder}
       value={value}
       onChange={(e) => onChange(e.target.value)}
+      style={style}
     />
   ) : (
     <input
@@ -26,6 +29,7 @@ const TextInput: React.FC<TextInputProps> = ({
       placeholder={placeholder}
       value={value}
       onChange={(e) => onChange(e.target.value)}
+      style={style}
     />
   );
 };

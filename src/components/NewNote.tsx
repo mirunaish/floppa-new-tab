@@ -4,7 +4,7 @@ import TextInput from "./TextInput";
 import { NoteInfo } from "../utils/types";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
-const NewImage: React.FC<CardComponentProps> = ({ id, close, visible }) => {
+const NewNote: React.FC<CardComponentProps> = ({ id, close, visible }) => {
   const [notes, setNotes] = useLocalStorage(
     "notes",
     {} as Record<string, NoteInfo>
@@ -30,13 +30,19 @@ const NewImage: React.FC<CardComponentProps> = ({ id, close, visible }) => {
   return (
     <>
       {visible && (
-        <Card id={id} title="add a new text note" close={close}>
+        <Card
+          id={id}
+          title="add a new text note"
+          close={close}
+          resizeable="nwse"
+        >
           <div
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               width: "100%",
+              height: "100%",
               gap: 5,
             }}
           >
@@ -46,6 +52,7 @@ const NewImage: React.FC<CardComponentProps> = ({ id, close, visible }) => {
               placeholder="widget title"
             />
             <TextInput
+              style={{ flexGrow: 1 }}
               value={text}
               onChange={setText}
               placeholder="note"
@@ -70,7 +77,13 @@ const NewImage: React.FC<CardComponentProps> = ({ id, close, visible }) => {
       )}
 
       {Object.entries(notes).map(([id, note]) => (
-        <Card key={id} id={id} title={note.title} close={() => removeNote(id)}>
+        <Card
+          key={id}
+          id={id}
+          title={note.title}
+          close={() => removeNote(id)}
+          resizeable="nwse"
+        >
           {note.text.split("\n").map((line) => (
             <>
               {line}
@@ -83,4 +96,4 @@ const NewImage: React.FC<CardComponentProps> = ({ id, close, visible }) => {
   );
 };
 
-export default NewImage;
+export default NewNote;

@@ -5,6 +5,7 @@ interface TextInputButtonProps {
   onEnter: (value: string) => void;
   placeholder?: string;
   initialValue?: string;
+  style?: React.CSSProperties;
 }
 
 /** text input that does something when you press enter */
@@ -13,6 +14,7 @@ const TextInputButton: React.FC<TextInputButtonProps> = ({
   onEnter,
   placeholder,
   initialValue,
+  style = {},
 }) => {
   const [value, setValue] = useState(initialValue ?? "");
 
@@ -29,6 +31,7 @@ const TextInputButton: React.FC<TextInputButtonProps> = ({
           setValue("");
         }
       }}
+      style={style}
     />
   );
 };

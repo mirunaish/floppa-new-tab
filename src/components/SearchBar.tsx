@@ -18,8 +18,8 @@ const SearchBar: React.FC<CardComponentProps> = ({ id, close }) => {
   );
 
   return (
-    <Card id={id} title="search" close={close}>
-      <div style={{ display: "flex", flexDirection: "column" }}>
+    <Card id={id} title="search" close={close} resizeable="ew">
+      <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
         <TextInputButton
           id="search-input"
           placeholder="search..."

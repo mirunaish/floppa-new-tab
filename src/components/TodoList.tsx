@@ -24,7 +24,9 @@ const TodoItem: React.FC<TodoItemProps> = ({
 }) => {
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
-      <input type="checkbox" checked={done} onChange={() => toggleDone(id)} />
+      <span>
+        <input type="checkbox" checked={done} onChange={() => toggleDone(id)} />
+      </span>
       <span
         className={done ? "alt-text" : ""}
         style={{
@@ -85,8 +87,15 @@ const TodoList: React.FC<CardComponentProps> = ({ id, close }) => {
   );
 
   return (
-    <Card id={id} title="todo list" close={close}>
-      <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+    <Card id={id} title="todo list" close={close} resizeable="nwse">
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          width: "100%",
+        }}
+      >
         {todoList.map((todo) => (
           <TodoItem
             {...todo}

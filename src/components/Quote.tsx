@@ -53,6 +53,7 @@ const Quote: React.FC<CardComponentProps> = ({ id, close }) => {
           <FaRotateRight style={{ cursor: "pointer" }} onClick={refreshQuote} />
         </>
       )}
+      resizeable="nwse"
     >
       <div style={{ maxWidth: 1000 }}>
         <span style={{ fontFamily: "Tangerine", fontSize: "2em" }}>

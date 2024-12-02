@@ -3,6 +3,11 @@ export interface Coords {
   y: number;
 }
 
+export interface Size {
+  width: number | string;
+  height: number | string;
+}
+
 export interface Interval {
   min: number;
   max: number;
