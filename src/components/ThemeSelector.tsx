@@ -5,7 +5,11 @@ import BubbleSelector from "./BubbleSelector";
 import { useCallback, useEffect } from "react";
 import Card, { CardComponentProps } from "./Card";
 
-const ThemeSelector: React.FC<CardComponentProps> = ({ id, close }) => {
+const ThemeSelector: React.FC<CardComponentProps> = ({
+  id,
+  close,
+  visible,
+}) => {
   const [theme, setTheme] = useLocalStorage("theme", Themes.FLOPPA);
   const [themeType, setThemeType] = useLocalStorage(
     "themeType",
@@ -42,6 +46,7 @@ const ThemeSelector: React.FC<CardComponentProps> = ({ id, close }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  if (!visible) return null;
   return (
     <Card id={id} title="pick your theme" close={close}>
       <div
