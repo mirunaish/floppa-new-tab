@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 interface TextInputButtonProps {
+  id?: string;
   onEnter: (value: string) => void;
   placeholder?: string;
   initialValue?: string;
@@ -8,6 +9,7 @@ interface TextInputButtonProps {
 
 /** text input that does something when you press enter */
 const TextInputButton: React.FC<TextInputButtonProps> = ({
+  id = undefined,
   onEnter,
   placeholder,
   initialValue,
@@ -16,6 +18,7 @@ const TextInputButton: React.FC<TextInputButtonProps> = ({
 
   return (
     <input
+      id={id}
       type="text"
       placeholder={placeholder}
       value={value}

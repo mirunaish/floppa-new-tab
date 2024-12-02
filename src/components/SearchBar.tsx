@@ -21,6 +21,7 @@ const SearchBar: React.FC<CardComponentProps> = ({ id, close }) => {
     <Card id={id} title="search" close={close}>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <TextInputButton
+          id="search-input"
           placeholder="search..."
           onEnter={(value: string) => {
             search(value);
@@ -29,7 +30,10 @@ const SearchBar: React.FC<CardComponentProps> = ({ id, close }) => {
 
         <BubbleSelector
           value={searchEngine}
-          onChange={setSearchEngine}
+          onChange={(value) => {
+            setSearchEngine(value);
+            document.getElementById("search-input")?.focus();
+          }}
           style={{ marginTop: 8 }}
           options={Object.entries(SEARCH_ENGINES).map(([id, engine]) => ({
             id,
