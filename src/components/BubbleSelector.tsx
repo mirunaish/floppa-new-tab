@@ -9,6 +9,7 @@ interface BubbleSelectorProps {
     image: (props: { style: CSSProperties }) => ReactNode;
   }[];
   imageSize?: { width: number; height: number };
+  maxCols?: number; // wrap after this many columns
   style?: CSSProperties;
 }
 
@@ -18,27 +19,46 @@ const BubbleSelector: React.FC<BubbleSelectorProps> = ({
   options,
   imageSize,
   style,
+  maxCols = 10,
 }) => {
   return (
     <div
       style={{
         ...style,
         display: "flex",
-        flexDirection: "row",
+        flexDirection: "column",
         gap: 5,
+        alignItems: "center",
       }}
     >
-      {options.map(({ id, image }) => (
-        <div
-          key={id}
-          onClick={() => {
-            onChange(id);
-          }}
-          className={"bubble" + (id === value ? " selected" : "")}
-        >
-          {image({ style: { ...imageSize, margin: 5 } })}
-        </div>
-      ))}
+      {/* map over rows */}
+      {options
+        .filter((_, i) => i % maxCols == 0)
+        .map((_, i) => (
+          <div
+            style={{
+              ...style,
+              display: "flex",
+              flexDirection: "row",
+              gap: 5,
+            }}
+          >
+            {/* map over columns in this row */}
+            {options
+              .slice(maxCols * i, maxCols * (i + 1))
+              .map(({ id, image }) => (
+                <div
+                  key={id}
+                  onClick={() => {
+                    onChange(id);
+                  }}
+                  className={"bubble" + (id === value ? " selected" : "")}
+                >
+                  {image({ style: { ...imageSize, margin: 5 } })}
+                </div>
+              ))}
+          </div>
+        ))}
     </div>
   );
 };

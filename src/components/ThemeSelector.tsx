@@ -66,6 +66,7 @@ const ThemeSelector: React.FC<CardComponentProps> = ({
             image: (props) => <img {...props} src={ThemeIcons[themeName]} />,
           }))}
           imageSize={{ width: 50, height: 50 }}
+          maxCols={4}
         />
 
         <BubbleSelector
