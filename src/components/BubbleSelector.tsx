@@ -36,6 +36,7 @@ const BubbleSelector: React.FC<BubbleSelectorProps> = ({
         .filter((_, i) => i % maxCols == 0)
         .map((_, i) => (
           <div
+            key={i}
             style={{
               ...style,
               display: "flex",

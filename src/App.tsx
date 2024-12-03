@@ -1,11 +1,11 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { CardComponentProps } from "./components/Card";
-import Quote from "./components/Quote";
-import SearchBar from "./components/SearchBar";
-import ThemeSelector from "./components/ThemeSelector";
-import TodoList from "./components/TodoList";
-import NewImage from "./components/NewImage";
+import Quote from "./widgets/Quote";
+import SearchBar from "./widgets/SearchBar";
+import ThemeSelector from "./widgets/ThemeSelector";
+import TodoList from "./widgets/TodoList";
+import NewImage from "./widgets/NewImage";
 import {
   FaImage,
   FaList,
@@ -15,7 +15,7 @@ import {
 } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import TaskBar from "./components/TaskBar";
-import NewNote from "./components/NewNote";
+import NewNote from "./widgets/NewNote";
 
 const WIDGETS: Record<
   string,

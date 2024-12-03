@@ -1,9 +1,9 @@
 import { FaMoon, FaRegSun } from "react-icons/fa6";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Colors, ThemeIcons, Themes, ThemeTypes } from "../utils/themes";
-import BubbleSelector from "./BubbleSelector";
+import BubbleSelector from "../components/BubbleSelector";
 import { useCallback, useEffect } from "react";
-import Card, { CardComponentProps } from "./Card";
+import Card, { CardComponentProps } from "../components/Card";
 
 const ThemeSelector: React.FC<CardComponentProps> = ({
   id,

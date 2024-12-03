@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import initialQuotes from "../assets/quotes.json";
 import { useDailyRandom } from "../hooks/useDailyRandom";
 import { FaRotateRight, FaUpload } from "react-icons/fa6";
-import Card, { CardComponentProps } from "./Card";
+import Card, { CardComponentProps } from "../components/Card";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const Quote: React.FC<CardComponentProps> = ({ id, close }) => {

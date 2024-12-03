@@ -1,8 +1,8 @@
 import React, { useCallback } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import TextInputButton from "./TextInputButton";
+import TextInputButton from "../components/TextInputButton";
 import { FaPlus, FaX } from "react-icons/fa6";
-import Card, { CardComponentProps } from "./Card";
+import Card, { CardComponentProps } from "../components/Card";
 
 interface Todo {
   id: string;

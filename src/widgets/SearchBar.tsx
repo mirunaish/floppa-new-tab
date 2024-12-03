@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
 import { DEFAULT_ENGINE, SEARCH_ENGINES } from "../utils/consts";
-import TextInputButton from "./TextInputButton";
-import BubbleSelector from "./BubbleSelector";
-import Card, { CardComponentProps } from "./Card";
+import TextInputButton from "../components/TextInputButton";
+import BubbleSelector from "../components/BubbleSelector";
+import Card, { CardComponentProps } from "../components/Card";
 
 const IMAGE_SIZE = { width: 25, height: 25 };
 

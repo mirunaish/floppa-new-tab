@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
-import Card, { CardComponentProps } from "./Card";
-import TextInput from "./TextInput";
+import Card, { CardComponentProps } from "../components/Card";
+import TextInput from "../components/TextInput";
 import { ImageInfo } from "../utils/types";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { IMAGES } from "../utils/consts";
