@@ -126,7 +126,6 @@ textarea:focus {
 input[type="text"]::placeholder,
 textarea::placeholder {
   color: var(--textAlt);
-  opacity: 0.75;
 }
 
 .alt-text {
