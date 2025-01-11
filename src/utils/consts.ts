@@ -6,7 +6,7 @@ import swisscowsLogo from "../assets/swisscows-logo.svg";
 import yepLogo from "../assets/yep-logo.svg";
 import openverseLogo from "../assets/openverse-logo.svg";
 import qwantLogo from "../assets/qwant-logo.svg";
-import searXNGLogo from "../assets/searxng-logo.svg";
+import searXNGLogo from "../assets/searXNG-logo.svg";
 import mojeekLogo from "../assets/mojeek-logo.svg";
 import { ImageInfo } from "./types";
 
