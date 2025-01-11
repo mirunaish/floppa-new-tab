@@ -12,10 +12,12 @@ import {
   FaPalette,
   FaPen,
   FaQuoteRight,
+  FaCircleInfo,
 } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import TaskBar from "./components/TaskBar";
 import NewNote from "./widgets/NewNote";
+import About from "./widgets/About";
 
 const WIDGETS: Record<
   string,
@@ -57,6 +59,12 @@ const WIDGETS: Record<
     ),
     icon: FaPen,
   },
+  about: {
+    component: (props: CardComponentProps) => (
+      <About key={props.id} {...props} />
+    ),
+    icon: FaCircleInfo,
+  },
 };
 
 function App() {
@@ -69,6 +77,7 @@ function App() {
       themeSelector: false,
       newImage: false,
       newNote: false,
+      about: false,
     }
   );
   const toggleVisible = useCallback(

@@ -33,11 +33,12 @@
 
 a {
   font-weight: 500;
-  color: var(--secondary);
-  text-decoration: inherit;
+  color: var(--textAlt);
+  text-decoration: underline;
+  transition: color 0.25s;
 }
 a:hover {
-  color: var(--secondaryAlt);
+  color: var(--primary);
 }
 
 body {
