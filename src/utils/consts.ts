@@ -1,6 +1,13 @@
 import googleLogo from "../assets/google-logo.svg";
 import startpageLogo from "../assets/startpage-logo.svg";
 import ddgLogo from "../assets/ddg-logo.svg";
+import ecosiaLogo from "../assets/ecosia-logo.ico";
+import swisscowsLogo from "../assets/swisscows-logo.svg";
+import yepLogo from "../assets/yep-logo.svg";
+import openverseLogo from "../assets/openverse-logo.svg";
+import qwantLogo from "../assets/qwant-logo.svg";
+import searXNGLogo from "../assets/searxng-logo.svg";
+import mojeekLogo from "../assets/mojeek-logo.svg";
 import { ImageInfo } from "./types";
 
 export const SEARCH_ENGINES: Record<
@@ -12,15 +19,50 @@ export const SEARCH_ENGINES: Record<
     url: "https://www.google.com/search?q=",
     logo: googleLogo,
   },
+  ddg: {
+    name: "DuckDuckGo",
+    url: "https://duckduckgo.com/?q=",
+    logo: ddgLogo,
+  },
   startpage: {
     name: "StartPage",
     url: "https://www.startpage.com/do/dsearch?query=",
     logo: startpageLogo,
   },
-  ddg: {
-    name: "DDG",
-    url: "https://duckduckgo.com/?q=",
-    logo: ddgLogo,
+  ecosia: {
+    name: "Ecosia",
+    url: "https://www.ecosia.org/search?q=",
+    logo: ecosiaLogo,
+  },
+  swisscows: {
+    name: "Swisscows",
+    url: "https://swisscows.com/web?query=",
+    logo: swisscowsLogo,
+  },
+  qwant: {
+    name: "Qwant",
+    url: "https://www.qwant.com/?q=",
+    logo: qwantLogo,
+  },
+  mojeek: {
+    name: "Mojeek",
+    url: "https://www.mojeek.com/search?q=",
+    logo: mojeekLogo,
+  },
+  searXNG: {
+    name: "SearXNG",
+    url: "https://search.catboy.house/search?q=",
+    logo: searXNGLogo,
+  },
+  yep: {
+    name: "Yep",
+    url: "https://www.yep.com/web?q=",
+    logo: yepLogo,
+  },
+  openverse: {
+    name: "Openverse",
+    url: "https://openverse.org/search?q=",
+    logo: openverseLogo,
   },
 };
 export const DEFAULT_ENGINE = "startpage";
