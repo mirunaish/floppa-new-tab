@@ -1,6 +1,6 @@
-# Floppa Home
+# Floppa's New Tab
 
-Floppa's widget board
+A Floppa-themed widget board for your new tab
 
 ![Widget Board](images/floppa_widget_board.png)
 
@@ -40,50 +40,10 @@ Add nice cat images or GIFs for your new tab.
 Choose a cat inspired color theme for your widgets. Pick between light and dark
 modes.
 
-## Setup
+## Dev Setup
 
-Hosted on render [here](https://widget-board.onrender.com/).
-
-Set Firefox's default homepage on new windows to https://widget-board.onrender.com/ and use [this extension](https://addons.mozilla.org/en-US/firefox/addon/new-tab-homepage/) to make it the default new tab too.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: "18.3" } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs["jsx-runtime"].rules,
-  },
-});
-```
+1. `npm install`
+2. `npm run build`
+3. In Firefox, go to [about:debugging#/runtime/this-firefox](about:debugging#/runtime/this-firefox)
+4. In the Temporary Extensions section, click on Load Temporary Add-on...
+5. Select `build/manifest.json`
