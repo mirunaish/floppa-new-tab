@@ -18,15 +18,28 @@ export function useLocalStorage<T>(
     })()
   );
 
-  // listen for changes in local storage in different tabs
+  // if local storage value is changed in a different tab, update it
   useEffect(() => {
+    // listen for changes in local storage
     const refreshValue = (event: StorageEvent) => {
       if (event.key !== key) return;
       if (event.newValue) setValue(JSON.parse(event.newValue));
     };
-
     window.addEventListener("storage", refreshValue);
-    return () => window.removeEventListener("storage", refreshValue);
+
+    // sometimes the local storage event doesn't fire if browser unloads the tab,
+    // so also check the value on visibility change
+    const checkValue = () => {
+      if (document.visibilityState !== "visible") return;
+      const storedValue = localStorage.getItem(key);
+      if (storedValue) setValue(JSON.parse(storedValue));
+    };
+    document.addEventListener("visibilitychange", checkValue);
+
+    return () => {
+      window.removeEventListener("storage", refreshValue);
+      document.removeEventListener("visibilitychange", checkValue);
+    };
   }, [key]);
 
   const updateValue = useCallback(
