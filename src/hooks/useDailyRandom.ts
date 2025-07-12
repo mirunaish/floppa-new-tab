@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import { Interval } from "../utils/types";
 import { generateRandom } from "../utils";
@@ -12,7 +12,20 @@ export function useDailyRandom(
   name: string,
   range: Interval
 ): [number, () => void] {
-  const today = useMemo(() => new Date().toDateString(), []);
+  const [today, setToday] = useState(new Date().toDateString());
+
+  // when i switch to this tab, check if the date has changed
+  useEffect(() => {
+    const refreshDate = () => {
+      if (document.visibilityState !== "visible") return;
+
+      const newDate = new Date().toDateString();
+      if (newDate !== today) setToday(newDate);
+    };
+
+    document.addEventListener("visibilitychange", refreshDate);
+    return () => document.removeEventListener("visibilitychange", refreshDate);
+  }, [today]);
 
   // store today's random number in local storage
   const [random, setRandom] = useLocalStorage<Random>(`${name}-random`, {
@@ -20,7 +33,7 @@ export function useDailyRandom(
     date: today,
   });
 
-  // on user request, get a new random number today
+  // on user request, get a new random number
   const refresh = useCallback(() => {
     setRandom({ number: generateRandom(range), date: today });
   }, [range, setRandom, today]);
