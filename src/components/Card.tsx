@@ -50,6 +50,16 @@ const Card: React.FC<CardProps> = ({
   const [isResizing, setIsResizing] = useState(false); // am i resizing the card?
   const [resizingSize, setResizingSize] = useState<Size>(size); // size while resizing
 
+  // if local storage position changes, also change moving position
+  useEffect(() => {
+    setMovingPosition(position);
+  }, [position]);
+
+  // if local storage size changes, also change resizing size
+  useEffect(() => {
+    setResizingSize(size);
+  }, [size]);
+
   const handleMoveMouseDown = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       const rect = (
