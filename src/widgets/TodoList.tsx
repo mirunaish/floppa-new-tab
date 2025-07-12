@@ -1,8 +1,9 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import TextInputButton from "../components/TextInputButton";
-import { FaPencil, FaPlus, FaX } from "react-icons/fa6";
+import { FaPencil, FaPlus, FaX, FaUpDown } from "react-icons/fa6";
 import Card, { CardComponentProps } from "../components/Card";
+import "./widgets.css";
 
 interface Todo {
   id: string;
@@ -11,20 +12,24 @@ interface Todo {
 }
 
 interface TodoItemProps extends Todo {
-  removeTodo: (id: string) => void;
   setName: (name: string) => void;
-  toggleDone: (id: string) => void;
+  toggleDone: () => void;
+  selected?: boolean;
+  toggleSelected: (value: boolean) => void;
+  removeTodo: () => void;
 }
 
 const TodoItem: React.FC<TodoItemProps> = ({
-  id,
   name,
   setName,
   done,
   toggleDone,
+  selected,
+  toggleSelected,
   removeTodo,
 }) => {
   const [editing, setEditing] = useState(false);
+  const selectedRef = React.useRef<HTMLDivElement>(null);
 
   const submit = useCallback(
     (newName: string) => {
@@ -34,34 +39,63 @@ const TodoItem: React.FC<TodoItemProps> = ({
     [setName]
   );
 
+  const startEditing = useCallback(() => {
+    setEditing(true);
+    toggleSelected(false);
+  }, [toggleSelected]);
+
+  // if selected, clicking outside will deselect
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!selected) return;
+      if (
+        selectedRef.current &&
+        !selectedRef.current.contains(event.target as Node)
+      ) {
+        toggleSelected(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [selected, toggleSelected]);
+
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        padding: "6px 1rem",
-        borderBottom: "1px solid var(--primaryAltTransparent)",
-      }}
-    >
+    <div ref={selectedRef} className={"todo " + (selected ? "selected" : "")}>
       <input
         type="checkbox"
         checked={done}
-        onChange={() => toggleDone(id)}
+        onChange={() => toggleDone()}
         style={{ marginRight: 6, flexShrink: 0 }}
         disabled={editing}
       />
 
       {!editing ? (
-        <span
-          className={done ? "alt-text" : ""}
+        <div
           style={{
-            marginLeft: 5,
-            textDecoration: done ? "line-through" : "none",
             flexGrow: 1,
+            marginLeft: 5,
+            display: "flex",
+            flexDirection: "column",
+            gap: 4,
           }}
         >
-          {name}
-        </span>
+          <span
+            className={done ? "alt-text" : ""}
+            style={{
+              textDecoration: done ? "line-through" : "none",
+            }}
+          >
+            {name}
+          </span>
+          {selected ? (
+            <span className="alt-text" style={{ fontSize: "0.8rem" }}>
+              press the up or down arrows to move this todo.
+            </span>
+          ) : null}
+        </div>
       ) : (
         <TextInputButton
           type="textarea"
@@ -73,22 +107,32 @@ const TodoItem: React.FC<TodoItemProps> = ({
 
       {!editing ? (
         <>
+          <FaUpDown
+            className={"todo-reorder " + (selected ? "selected" : "")}
+            onClick={() => toggleSelected(!selected)}
+            style={{
+              cursor: "pointer",
+              marginLeft: 8,
+              flexShrink: 0,
+            }}
+          />
+
           <FaPencil
-            onClick={() => setEditing(true)}
+            onClick={startEditing}
             className="alt-text"
             style={{
               cursor: "pointer",
-              marginLeft: 10,
+              marginLeft: 4,
               flexShrink: 0,
             }}
           />
 
           <FaX
-            onClick={() => removeTodo(id)}
+            onClick={() => removeTodo()}
             className="alt-text"
             style={{
               cursor: "pointer",
-              marginLeft: 10,
+              marginLeft: 8,
               flexShrink: 0,
             }}
           />
@@ -143,6 +187,50 @@ const TodoList: React.FC<CardComponentProps> = ({ id, close }) => {
     [setTodoList, todoList]
   );
 
+  const [selectedTodo, setSelectedTodo] = useState<string | null>(null);
+  const toggleSelected = useCallback((id: string, value: boolean) => {
+    setSelectedTodo(value ? id : null);
+  }, []);
+
+  const moveTodo = useCallback(
+    (value: number) => {
+      if (!selectedTodo) return;
+
+      // get index of selected todo
+      const index = todoList.findIndex((t) => t.id === selectedTodo);
+      if (index === -1) return; // not selected
+      if (index + value < 0 || index + value >= todoList.length) return; // out of bounds
+
+      // swap
+      const tdl = [...todoList];
+      [tdl[index], tdl[index + value]] = [tdl[index + value], tdl[index]];
+      setTodoList(tdl);
+    },
+    [selectedTodo, setTodoList, todoList]
+  );
+
+  // add up and down arrow events
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!selectedTodo) return;
+      if (event.key === "ArrowUp") {
+        moveTodo(-1);
+        event.preventDefault(); // prevent scrolling
+      } else if (event.key === "ArrowDown") {
+        moveTodo(1);
+        event.preventDefault();
+      }
+
+      // escape or enter key deselects selected todo
+      else if (event.key === "Escape" || event.key === "Enter") {
+        setSelectedTodo(null);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [selectedTodo, moveTodo]);
+
   return (
     <Card
       id={id}
@@ -164,9 +252,11 @@ const TodoList: React.FC<CardComponentProps> = ({ id, close }) => {
           <TodoItem
             {...todo}
             key={todo.id}
-            removeTodo={removeTodo}
+            removeTodo={() => removeTodo(todo.id)}
             setName={(name) => editTodo(todo.id, name)}
-            toggleDone={toggleDone}
+            toggleDone={() => toggleDone(todo.id)}
+            selected={selectedTodo === todo.id}
+            toggleSelected={(value) => toggleSelected(todo.id, value)}
           />
         ))}
         <div
