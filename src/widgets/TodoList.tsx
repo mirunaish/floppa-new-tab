@@ -23,10 +23,21 @@ const TodoItem: React.FC<TodoItemProps> = ({
   removeTodo,
 }) => {
   return (
-    <div style={{ display: "flex", alignItems: "center" }}>
-      <span>
-        <input type="checkbox" checked={done} onChange={() => toggleDone(id)} />
-      </span>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        padding: "6px 1rem",
+        borderBottom: "1px solid var(--primaryAltTransparent)",
+      }}
+    >
+      <input
+        type="checkbox"
+        checked={done}
+        onChange={() => toggleDone(id)}
+        style={{ marginRight: 6, flexShrink: 0 }}
+      />
+
       <span
         className={done ? "alt-text" : ""}
         style={{
@@ -38,16 +49,15 @@ const TodoItem: React.FC<TodoItemProps> = ({
         {name}
       </span>
 
-      <span
+      <FaX
         onClick={() => removeTodo(id)}
         className="alt-text"
         style={{
           cursor: "pointer",
           marginLeft: 10,
+          flexShrink: 0,
         }}
-      >
-        <FaX />
-      </span>
+      />
     </div>
   );
 };
@@ -87,13 +97,20 @@ const TodoList: React.FC<CardComponentProps> = ({ id, close }) => {
   );
 
   return (
-    <Card id={id} title="todo list" close={close} resizeable="nwse">
+    <Card
+      id={id}
+      title="todo list"
+      close={close}
+      resizeable="nwse"
+      padding={false}
+    >
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: 2,
           width: "100%",
+          padding: "0.6rem 0rem",
+          height: "fit-content",
         }}
       >
         {todoList.map((todo) => (
@@ -106,11 +123,12 @@ const TodoList: React.FC<CardComponentProps> = ({ id, close }) => {
         ))}
         <div
           style={{
-            marginTop: 8,
+            marginTop: 10,
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
             gap: 5,
+            padding: "0rem 1rem",
           }}
         >
           <FaPlus style={{ margin: 4 }} />
