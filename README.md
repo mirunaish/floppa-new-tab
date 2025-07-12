@@ -18,13 +18,19 @@ Select a search engine, type your query, and press enter to search.
 
 ### To do List
 
-Add new todos and check off completed ones. They are stored in localStorage,
+Add new todos and check off completed ones.
+You can edit todos by clicking the pencil icon.
+Make your changes and press enter to submit, or the escape key to cancel.
+
+Todos are stored in localStorage,
 so clearing cache or site data will delete them.
 
 ### Daily quote
 
 A random quote every day. Click on the refresh button to get a new quote. Click
-on the upload button to upload a JSON with custom quotes. Like Todos, these are
+on the upload button to upload a JSON with custom quotes.
+
+Like Todos, these are
 stored in localStorage, so make sure to keep a backup.
 
 ### Text notes
