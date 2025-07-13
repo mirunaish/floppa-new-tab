@@ -1,7 +1,7 @@
 import "./TaskBar.css";
 
 interface TaskBarProps {
-  widgets: { id: string; icon: React.FC }[];
+  widgets: { id: string; icon: React.FC; visible: boolean }[];
   open: (id: string) => void;
 }
 
@@ -20,9 +20,13 @@ const TaskBar: React.FC<TaskBarProps> = ({ widgets, open }) => {
         <div className="theme-icon" style={{ width: 30, height: 30 }} />
       </div>
 
-      {/* all closed widgets */}
-      {widgets.map(({ id, icon }) => (
-        <div className="taskbar__task" key={id} onClick={() => open(id)}>
+      {/* all widgets */}
+      {widgets.map(({ id, icon, visible }) => (
+        <div
+          className={"taskbar__task" + (visible ? " disabled" : "")}
+          key={id}
+          onClick={() => (visible ? null : open(id))}
+        >
           {icon({ size: 30 })}
         </div>
       ))}
