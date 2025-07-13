@@ -318,9 +318,14 @@ const Card: React.FC<CardProps> = ({
           }}
         >
           {/* minimize */}
-          <FaMinus className="click" onClick={() => setMinimized(!minimized)} />
+          <FaMinus
+            title="minimize"
+            className="click"
+            onClick={() => setMinimized(!minimized)}
+          />
           {/* resize */}
           <FaRegSquare
+            title="reset to default size"
             className="click"
             onClick={() => {
               setSize(initialSize);
@@ -328,7 +333,7 @@ const Card: React.FC<CardProps> = ({
             }}
           />
           {/* close */}
-          <FaX className="click" onClick={closeCard} />
+          <FaX title="close" className="click" onClick={closeCard} />
         </div>
       </div>
 

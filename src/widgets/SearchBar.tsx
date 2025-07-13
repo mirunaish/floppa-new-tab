@@ -31,6 +31,7 @@ const SearchBar: React.FC<CardComponentProps> = ({ id, close }) => {
       resizeable="ew"
       buttons={() => (
         <FaStar
+          title="mark the current search engine as default"
           className="click"
           onClick={() => setDefaultEngine(searchEngine)}
         />
