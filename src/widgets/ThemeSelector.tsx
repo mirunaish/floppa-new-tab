@@ -17,11 +17,8 @@ const ThemeSelector: React.FC<CardComponentProps> = ({
   );
 
   // change theme variables on root
-  const onChange = useCallback(
+  const loadTheme = useCallback(
     (newTheme: Themes, newThemeType: ThemeTypes) => {
-      if (theme !== newTheme) setTheme(newTheme);
-      if (themeType !== newThemeType) setThemeType(newThemeType);
-
       const root = document.documentElement;
       const colors = Colors[newTheme][newThemeType];
       Object.entries(colors).forEach(([key, value]) => {
@@ -37,14 +34,21 @@ const ThemeSelector: React.FC<CardComponentProps> = ({
       // and also change icon
       root.style.setProperty(`--icon`, `url(${ThemeIcons[newTheme]})`);
     },
+    []
+  );
+
+  const onChange = useCallback(
+    (newTheme: Themes, newThemeType: ThemeTypes) => {
+      if (theme !== newTheme) setTheme(newTheme);
+      if (themeType !== newThemeType) setThemeType(newThemeType);
+    },
     [setTheme, setThemeType, theme, themeType]
   );
 
-  // on first load, set colors
+  // whenever theme changes, load the variables
   useEffect(() => {
-    onChange(theme, themeType);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    loadTheme(theme, themeType);
+  }, [loadTheme, theme, themeType]);
 
   if (!visible) return null;
   return (
