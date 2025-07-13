@@ -3,18 +3,28 @@ import Card, { CardComponentProps } from "../components/Card";
 import TextInput from "../components/TextInput";
 import { NoteInfo } from "../utils/types";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import Note from "./Note";
 
 const NewNote: React.FC<CardComponentProps> = ({ id, close, visible }) => {
   const [notes, setNotes] = useLocalStorage(
     "notes",
     {} as Record<string, NoteInfo>
   );
+
   const createNote = useCallback(
     (note: NoteInfo) => {
       setNotes({ ...notes, [note.id]: note });
     },
     [notes, setNotes]
   );
+
+  const editNote = useCallback(
+    (id: string, text: string) => {
+      setNotes({ ...notes, [id]: { ...notes[id], text } });
+    },
+    [notes, setNotes]
+  );
+
   const removeNote = useCallback(
     (id: string) => {
       const newNotes = { ...notes };
@@ -56,7 +66,7 @@ const NewNote: React.FC<CardComponentProps> = ({ id, close, visible }) => {
               value={text}
               onChange={setText}
               placeholder="note"
-              long={true}
+              type="textarea"
             />
             <button
               style={{ marginTop: 5 }}
@@ -77,20 +87,13 @@ const NewNote: React.FC<CardComponentProps> = ({ id, close, visible }) => {
       )}
 
       {Object.entries(notes).map(([id, note]) => (
-        <Card
+        <Note
           key={id}
-          id={id}
-          title={note.title}
+          {...note}
           close={() => removeNote(id)}
-          resizeable="nwse"
-        >
-          {note.text.split("\n").map((line) => (
-            <>
-              {line}
-              <br />
-            </>
-          ))}
-        </Card>
+          visible={true}
+          editNote={(newText) => editNote(id, newText)}
+        />
       ))}
     </>
   );
