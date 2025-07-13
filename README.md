@@ -1,6 +1,6 @@
-# Floppa Home
+# Floppa's New Tab
 
-Floppa's widget board
+A Floppa-themed widget board for your new tab
 
 ![Widget Board](images/floppa_widget_board.png)
 
@@ -59,8 +59,10 @@ Add nice cat images or GIFs for your new tab.
 Choose a cat inspired color theme for your widgets. Pick between light and dark
 modes.
 
-## Setup
+## Dev Setup
 
-Hosted on render [here](https://widget-board.onrender.com/).
-
-Set Firefox's default homepage on new windows to https://widget-board.onrender.com/ and use [this extension](https://addons.mozilla.org/en-US/firefox/addon/new-tab-homepage/) to make it the default new tab too.
+1. `npm install --force`
+2. `npm run build`
+3. In Firefox, go to [about:debugging#/runtime/this-firefox](about:debugging#/runtime/this-firefox)
+4. In the Temporary Extensions section, click on Load Temporary Add-on...
+5. Select `build/manifest.json`

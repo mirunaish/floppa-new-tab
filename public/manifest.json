@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+  "name": "floppa's new tab",
+  "version": "1.0",
+  "description": "a widget board for your new tab",
+
+  "icons": {
+    "192": "cat.png"
+  },
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+
+  "permissions": [
+    "https://www.nasa.gov/*",
+    "https://www.merriam-webster.com/*"
+  ],
+
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "floppa.newtab@unicornish.com"
+    }
+  }
+}

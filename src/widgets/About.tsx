@@ -10,9 +10,10 @@ const About: React.FC<CardComponentProps> = ({ id, close }) => {
           flexDirection: "column",
           alignItems: "center",
           gap: 10,
+          padding: "0px 16px",
         }}
       >
-        <span style={{ fontSize: "2em" }}>floppa's widget board</span>
+        <span style={{ fontSize: "2em" }}>floppa's new tab</span>
 
         <span>
           made by <a href="https://github.com/mirunaish">unicornish</a>
