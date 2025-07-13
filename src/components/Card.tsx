@@ -11,6 +11,7 @@ import { Coords, Size } from "../utils/types";
 import { FaGripVertical, FaMinus } from "react-icons/fa6";
 import { FaRegSquare } from "react-icons/fa6";
 import { FaX } from "react-icons/fa6";
+import { useActualSize } from "../hooks/useActualSize";
 
 // props of component that uses card
 export interface CardComponentProps {
@@ -44,11 +45,47 @@ const Card: React.FC<CardProps> = ({
 }) => {
   const cardRef = React.useRef<HTMLDivElement>(null);
 
+  /* --------------------------------- size and position --------------------------------- */
+
+  const actualSize = useActualSize(cardRef);
+
   // position stored in local storage
-  const [position, setPosition] = useLocalStorage(`${id}-position`, {
-    x: 100,
-    y: 100,
+  const [_positionP, _setPositionP] = useLocalStorage(`${id}-position`, {
+    x: 0.1,
+    y: 0.1,
   });
+  const [position, _setPosition] = useState({
+    x: _positionP.x * window.innerWidth,
+    y: _positionP.y * window.innerHeight,
+  });
+  const setPosition = useCallback(
+    (newPosition: Coords) => {
+      _setPosition(newPosition);
+      _setPositionP({
+        x: newPosition.x / window.innerWidth,
+        y: newPosition.y / window.innerHeight,
+      });
+    },
+    [_setPositionP]
+  );
+  useEffect(() => {
+    // when the window size changes, update position
+    const handleResize = () =>
+      _setPosition({
+        x: _positionP.x * window.innerWidth,
+        y: _positionP.y * window.innerHeight,
+      });
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [_positionP]);
+  // when local storage position changes, update position
+  useEffect(() => {
+    _setPosition({
+      x: _positionP.x * window.innerWidth,
+      y: _positionP.y * window.innerHeight,
+    });
+  }, [_positionP, _setPosition]);
+
   // size stored in local storage
   const [size, setSize] = useLocalStorage<Size>(`${id}-size`, initialSize);
 
@@ -143,7 +180,22 @@ const Card: React.FC<CardProps> = ({
     };
   }, [handleMouseMove, handleMouseUp, isMoving, isResizing]);
 
+  // clip position so it doesn't go off screen
+  const clippedPosition = useMemo(() => {
+    const newPosition = { ...movingPosition };
+    if (newPosition.x < 0) newPosition.x = 0;
+    if (newPosition.x + actualSize.width > window.innerWidth) {
+      newPosition.x = window.innerWidth - actualSize.width;
+    }
+    if (newPosition.y + actualSize.height > window.innerHeight) {
+      newPosition.y = window.innerHeight - actualSize.height;
+    }
+    return newPosition;
+  }, [actualSize.height, actualSize.width, movingPosition]);
+
   const [minimized, setMinimized] = useLocalStorage(`${id}-minimized`, false);
+
+  /* ------------------------------------- z index -------------------------------------- */
 
   const [zIndexes, setZIndexes] = useLocalStorage<Record<string, number>>(
     "z-indexes",
@@ -183,22 +235,18 @@ const Card: React.FC<CardProps> = ({
     setZIndexes(newZIndexes);
   }, [id, maxZIndex, minZIndex, setZIndexes, zIndexes]);
 
+  /* --------------------------------- close confirmation --------------------------------- */
+
   // whether the confirm dialog is open
   const [closeConfirmOpen, setCloseConfirmOpen] = useState(false);
-  // will set the card's size to what it was before the dialog was opened
-  const [sizeBeforeConfirm, setSizeBeforeConfirm] = useState<Size>({
-    width: 0,
-    height: 0,
-  });
 
   const closeCard = useCallback(() => {
     if (requireConfirmForClose) {
-      // get actual size of card element
-      const size = cardRef.current?.getBoundingClientRect();
-      if (size) setSizeBeforeConfirm(size);
       setCloseConfirmOpen(true);
     } else close(id);
   }, [close, id, requireConfirmForClose]);
+
+  /* ------------------------------------- render ------------------------------------ */
 
   return (
     <div
@@ -206,12 +254,12 @@ const Card: React.FC<CardProps> = ({
       className="card"
       style={{
         position: "absolute",
-        top: movingPosition.y,
-        left: movingPosition.x,
+        top: clippedPosition.y,
+        left: clippedPosition.x,
 
-        width: closeConfirmOpen ? sizeBeforeConfirm.width : resizingSize.width,
+        width: closeConfirmOpen ? actualSize.width : resizingSize.width,
         height: closeConfirmOpen
-          ? sizeBeforeConfirm.height
+          ? actualSize.height
           : resizeable == "ew" || minimized
             ? "auto"
             : resizingSize.height,

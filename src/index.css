@@ -16,6 +16,7 @@
   background-color: var(--backgroundAlt);
   background-image: var(--backgroundImage);
   background-size: cover;
+  background-position: center;
 
   --primary: #f294bd;
   --primaryAlt: #c75f8d;
@@ -27,8 +28,8 @@
   --text: #5e3044;
   --textAlt: #a85e7e;
 
-  --icon: url("assets/Bingus.webp");
-  --backgroundImage: url("assets/bg.jpg");
+  --icon: url("");
+  --backgroundImage: url("");
 }
 
 a {
