@@ -1,4 +1,5 @@
 import { CSSProperties, ReactNode } from "react";
+import { FaStar } from "react-icons/fa6";
 import "./BubbleSelector.css";
 
 interface BubbleSelectorProps {
@@ -7,10 +8,12 @@ interface BubbleSelectorProps {
   options: {
     id: string;
     image: (props: { style: CSSProperties }) => ReactNode;
+    tooltip?: string;
   }[];
   imageSize?: { width: number; height: number };
   maxCols?: number; // wrap after this many columns
   style?: CSSProperties;
+  starred?: string;
 }
 
 const BubbleSelector: React.FC<BubbleSelectorProps> = ({
@@ -20,6 +23,7 @@ const BubbleSelector: React.FC<BubbleSelectorProps> = ({
   imageSize,
   style,
   maxCols = 10,
+  starred = "",
 }) => {
   return (
     <div
@@ -47,14 +51,16 @@ const BubbleSelector: React.FC<BubbleSelectorProps> = ({
             {/* map over columns in this row */}
             {options
               .slice(maxCols * i, maxCols * (i + 1))
-              .map(({ id, image }) => (
+              .map(({ id, image, tooltip }) => (
                 <div
                   key={id}
                   onClick={() => {
                     onChange(id);
                   }}
                   className={"bubble" + (id === value ? " selected" : "")}
+                  title={tooltip}
                 >
+                  {starred === id && <FaStar className="star-icon" />}
                   {image({ style: { ...imageSize, margin: 5 } })}
                 </div>
               ))}
