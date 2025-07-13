@@ -1,11 +1,4 @@
 import { useCallback } from "react";
-import { useLocalStorage } from "./hooks/useLocalStorage";
-import { CardComponentProps } from "./components/Card";
-import Quote from "./widgets/Quote";
-import SearchBar from "./widgets/SearchBar";
-import ThemeSelector from "./widgets/ThemeSelector";
-import TodoList from "./widgets/TodoList";
-import NewImage from "./widgets/NewImage";
 import {
   FaImage,
   FaList,
@@ -13,11 +6,21 @@ import {
   FaPen,
   FaQuoteRight,
   FaCircleInfo,
+  FaBook,
 } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
+import { GiRingedPlanet } from "react-icons/gi";
+import { useLocalStorage } from "./hooks/useLocalStorage";
+import { CardComponentProps } from "./components/Card";
+import Quote from "./widgets/Quote";
+import SearchBar from "./widgets/SearchBar";
+import ThemeSelector from "./widgets/ThemeSelector";
+import TodoList from "./widgets/TodoList";
+import NewImage from "./widgets/NewImage";
 import TaskBar from "./components/TaskBar";
 import NewNote from "./widgets/NewNote";
 import About from "./widgets/About";
+import RSSFeed from "./widgets/RSSFeed";
 
 const WIDGETS: Record<
   string,
@@ -41,11 +44,27 @@ const WIDGETS: Record<
     ),
     icon: FaQuoteRight,
   },
-  themeSelector: {
+  wordOfTheDay: {
     component: (props: CardComponentProps) => (
-      <ThemeSelector key={props.id} {...props} />
+      <RSSFeed
+        key={props.id}
+        {...props}
+        url="https://www.merriam-webster.com/wotd/feed/rss2"
+        title="word of the day"
+      />
     ),
-    icon: FaPalette,
+    icon: FaBook,
+  },
+  astronomyPicture: {
+    component: (props: CardComponentProps) => (
+      <RSSFeed
+        key={props.id}
+        {...props}
+        url="https://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss"
+        title="nasa picture of the day"
+      />
+    ),
+    icon: GiRingedPlanet,
   },
   newImage: {
     component: (props: CardComponentProps) => (
@@ -58,6 +77,12 @@ const WIDGETS: Record<
       <NewNote key={props.id} {...props} />
     ),
     icon: FaPen,
+  },
+  themeSelector: {
+    component: (props: CardComponentProps) => (
+      <ThemeSelector key={props.id} {...props} />
+    ),
+    icon: FaPalette,
   },
   about: {
     component: (props: CardComponentProps) => (

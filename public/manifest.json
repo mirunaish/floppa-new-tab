@@ -8,6 +8,16 @@
     "192": "cat.png"
   },
 
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+
+  "permissions": [
+    "https://www.nasa.gov/*",
+    "https://www.merriam-webster.com/*"
+  ],
+
   "chrome_url_overrides": {
     "newtab": "newtab.html"
   },
