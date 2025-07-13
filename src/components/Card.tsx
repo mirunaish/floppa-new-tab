@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useState, ReactNode } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+  ReactNode,
+  useMemo,
+} from "react";
 import "./Card.css";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Coords, Size } from "../utils/types";
@@ -139,6 +145,44 @@ const Card: React.FC<CardProps> = ({
 
   const [minimized, setMinimized] = useLocalStorage(`${id}-minimized`, false);
 
+  const [zIndexes, setZIndexes] = useLocalStorage<Record<string, number>>(
+    "z-indexes",
+    {},
+    true
+  );
+  const minZIndex = useMemo(
+    () => Object.values(zIndexes).reduce((p, c) => Math.min(p, c), Infinity),
+    [zIndexes]
+  );
+  const maxZIndex = useMemo(
+    () => Object.values(zIndexes).reduce((p, c) => Math.max(p, c), 0),
+    [zIndexes]
+  );
+
+  // if my z index is not in local storage, add it
+  useEffect(() => {
+    if (!zIndexes[id]) {
+      setZIndexes({ ...zIndexes, [id]: maxZIndex + 1 });
+    }
+  }, [id, maxZIndex, setZIndexes, zIndexes]);
+
+  const resetZIndex = useCallback(() => {
+    if (zIndexes[id] === maxZIndex) return; // already on top
+
+    let newZIndexes = { ...zIndexes, [id]: maxZIndex + 1 }; // move to top
+
+    // if this was the minimum, subtract the minimum from all z indexes so they don't explode
+    if (zIndexes[id] === minZIndex)
+      newZIndexes = Object.entries(newZIndexes)
+        .map(([id, value]) => [id, value - minZIndex + 1])
+        .reduce(
+          (p, [id, value]) => ({ ...p, [id as unknown as string]: value }),
+          {}
+        );
+
+    setZIndexes(newZIndexes);
+  }, [id, maxZIndex, minZIndex, setZIndexes, zIndexes]);
+
   // whether the confirm dialog is open
   const [closeConfirmOpen, setCloseConfirmOpen] = useState(false);
   // will set the card's size to what it was before the dialog was opened
@@ -176,7 +220,10 @@ const Card: React.FC<CardProps> = ({
 
         display: "flex",
         flexDirection: "column",
+
+        zIndex: zIndexes[id] ?? 0,
       }}
+      onMouseDown={resetZIndex}
     >
       {/* title bar */}
       <div
