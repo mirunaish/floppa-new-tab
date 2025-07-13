@@ -8,64 +8,78 @@ import openverseLogo from "../assets/openverse-logo.svg";
 import qwantLogo from "../assets/qwant-logo.svg";
 import searXNGLogo from "../assets/searXNG-logo.svg";
 import mojeekLogo from "../assets/mojeek-logo.svg";
+import gigabrainLogo from "../assets/gigabrain-logo.png";
 import { ImageInfo } from "./types";
 
 export const SEARCH_ENGINES: Record<
   string,
-  { name: string; url: string; logo: string }
+  { name: string; url: string; logo: string; description: string }
 > = {
   google: {
     name: "Google",
     url: "https://www.google.com/search?q=",
     logo: googleLogo,
+    description: "it's google",
   },
   ddg: {
     name: "DuckDuckGo",
     url: "https://duckduckgo.com/?q=",
     logo: ddgLogo,
+    description:
+      "popular privacy-focused search engine with bing results and a lot of features",
   },
   startpage: {
     name: "StartPage",
     url: "https://www.startpage.com/do/dsearch?query=",
     logo: startpageLogo,
-  },
-  ecosia: {
-    name: "Ecosia",
-    url: "https://www.ecosia.org/search?q=",
-    logo: ecosiaLogo,
-  },
-  swisscows: {
-    name: "Swisscows",
-    url: "https://swisscows.com/web?query=",
-    logo: swisscowsLogo,
-  },
-  qwant: {
-    name: "Qwant",
-    url: "https://www.qwant.com/?q=",
-    logo: qwantLogo,
+    description: "privacy-focused search engine with google results",
   },
   mojeek: {
     name: "Mojeek",
     url: "https://www.mojeek.com/search?q=",
     logo: mojeekLogo,
+    description: "privacy-focused, completely independent search engine",
+  },
+  swisscows: {
+    name: "Swisscows",
+    url: "https://swisscows.com/web?query=",
+    logo: swisscowsLogo,
+    description: "privacy-focused search engine with a family friendly focus",
   },
   searXNG: {
     name: "SearXNG",
     url: "https://search.catboy.house/search?q=",
     logo: searXNGLogo,
+    description:
+      "a metasearch engine that aggregates results from other search engines",
+  },
+  ecosia: {
+    name: "Ecosia",
+    url: "https://www.ecosia.org/search?q=",
+    logo: ecosiaLogo,
+    description:
+      "uses ad revenue to plant trees (remember to disable your ad blocker)",
   },
   yep: {
     name: "Yep",
     url: "https://www.yep.com/web?q=",
     logo: yepLogo,
+    description:
+      "shares ad revenue with creators (remember to disable your ad blocker)",
+  },
+  gigabrain: {
+    name: "Gigabrain",
+    url: "https://gigabrain.com/search/",
+    logo: gigabrainLogo,
+    description: "searches reddit posts",
   },
   openverse: {
     name: "Openverse",
     url: "https://openverse.org/search?q=",
     logo: openverseLogo,
+    description: "public domain images",
   },
 };
-export const DEFAULT_ENGINE = "startpage";
 
 export const IMAGES: Record<string, ImageInfo> = {
   popcat: {
