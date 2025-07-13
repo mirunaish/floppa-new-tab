@@ -220,6 +220,7 @@ const Card: React.FC<CardProps> = ({
       <div
         className="card__body"
         style={{
+          display: "flex",
           padding: padding ? (minimized ? "0rem 1rem" : "0.6rem 1rem") : 0,
           height: minimized ? 0 : "100%",
         }}

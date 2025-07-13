@@ -23,5 +23,4 @@
 
 .card__body {
   overflow-y: scroll;
-  display: flex;
 }
