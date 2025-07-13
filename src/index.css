@@ -145,3 +145,17 @@ textarea::placeholder {
 .click {
   cursor: pointer;
 }
+
+.expand {
+  width: 100%;
+  height: 100%;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+}

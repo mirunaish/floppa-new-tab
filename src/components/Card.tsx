@@ -19,9 +19,10 @@ interface CardProps {
   children: ReactNode;
   buttons?: () => ReactNode;
   padding?: boolean;
-  close?: (id: string) => void;
+  close: (id: string) => void;
   initialSize?: Size;
   resizeable?: boolean | string;
+  requireConfirmForClose?: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -33,7 +34,10 @@ const Card: React.FC<CardProps> = ({
   close,
   initialSize = { width: "auto", height: "auto" },
   resizeable = false,
+  requireConfirmForClose = false,
 }) => {
+  const cardRef = React.useRef<HTMLDivElement>(null);
+
   // position stored in local storage
   const [position, setPosition] = useLocalStorage(`${id}-position`, {
     x: 100,
@@ -135,16 +139,38 @@ const Card: React.FC<CardProps> = ({
 
   const [minimized, setMinimized] = useLocalStorage(`${id}-minimized`, false);
 
+  // whether the confirm dialog is open
+  const [closeConfirmOpen, setCloseConfirmOpen] = useState(false);
+  // will set the card's size to what it was before the dialog was opened
+  const [sizeBeforeConfirm, setSizeBeforeConfirm] = useState<Size>({
+    width: 0,
+    height: 0,
+  });
+
+  const closeCard = useCallback(() => {
+    if (requireConfirmForClose) {
+      // get actual size of card element
+      const size = cardRef.current?.getBoundingClientRect();
+      if (size) setSizeBeforeConfirm(size);
+      setCloseConfirmOpen(true);
+    } else close(id);
+  }, [close, id, requireConfirmForClose]);
+
   return (
     <div
+      ref={cardRef}
       className="card"
       style={{
         position: "absolute",
         top: movingPosition.y,
         left: movingPosition.x,
 
-        width: resizingSize.width,
-        height: resizeable == "ew" || minimized ? "auto" : resizingSize.height,
+        width: closeConfirmOpen ? sizeBeforeConfirm.width : resizingSize.width,
+        height: closeConfirmOpen
+          ? sizeBeforeConfirm.height
+          : resizeable == "ew" || minimized
+            ? "auto"
+            : resizingSize.height,
         minWidth: "min-content",
         minHeight: minimized ? 0 : 100,
 
@@ -207,10 +233,7 @@ const Card: React.FC<CardProps> = ({
             }}
           />
           {/* close */}
-          <FaX
-            style={{ cursor: "pointer" }}
-            onClick={close ? () => close(id) : () => {}}
-          />
+          <FaX className="click" onClick={closeCard} />
         </div>
       </div>
 
@@ -221,11 +244,50 @@ const Card: React.FC<CardProps> = ({
           height: minimized ? 0 : "100%",
         }}
       >
-        {children}
+        {closeConfirmOpen ? (
+          <div
+            className="expand"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "2rem",
+              boxSizing: "border-box",
+            }}
+          >
+            <div
+              className="column"
+              style={{
+                gap: 16,
+                alignItems: "stretch",
+                overflowY: "scroll",
+              }}
+            >
+              <span>
+                Are you sure you want to delete this card? You may lose unsaved
+                data.
+              </span>
+              <div
+                className="row"
+                style={{
+                  gap: 10,
+                  justifyContent: "space-around",
+                }}
+              >
+                <button onClick={() => setCloseConfirmOpen(false)}>
+                  Cancel
+                </button>
+                <button onClick={() => close(id)}>Delete</button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          children
+        )}
       </div>
 
       {/* resize icon in bottom corner */}
-      {resizeable && !minimized && (
+      {resizeable && !minimized && !closeConfirmOpen && (
         <div
           style={{
             position: "absolute",
