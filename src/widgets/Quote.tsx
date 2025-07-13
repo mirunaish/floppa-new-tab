@@ -47,10 +47,10 @@ const Quote: React.FC<CardComponentProps> = ({ id, close }) => {
       buttons={() => (
         <>
           <FaUpload
-            className="click"
+            style={{ cursor: "pointer" }}
             onClick={() => document.getElementById("uploadQuotes")?.click()}
           />
-          <FaRotateRight className="click" onClick={refreshQuote} />
+          <FaRotateRight style={{ cursor: "pointer" }} onClick={refreshQuote} />
         </>
       )}
       resizeable="nwse"

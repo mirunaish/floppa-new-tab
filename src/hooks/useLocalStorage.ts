@@ -2,8 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 
 export function useLocalStorage<T>(
   key: string,
-  initialValue: T,
-  shared = false
+  initialValue: T
 ): [T, (value: T) => void] {
   const [value, setValue] = useState(
     (() => {
@@ -28,19 +27,6 @@ export function useLocalStorage<T>(
     };
     window.addEventListener("storage", refreshValue);
 
-    // listen for the custom event for localstorage keys shared by multiple components
-    const refreshValueCustom = (
-      event: CustomEvent<{ key: string; newValue: string }>
-    ) => {
-      if (event.detail.key !== key) return;
-      if (event.detail.newValue) setValue(JSON.parse(event.detail.newValue));
-    };
-    if (shared)
-      window.addEventListener(
-        "sharedstorage",
-        refreshValueCustom as EventListener
-      );
-
     // sometimes the local storage event doesn't fire if browser unloads the tab,
     // so also check the value on visibility change
     const checkValue = () => {
@@ -52,29 +38,16 @@ export function useLocalStorage<T>(
 
     return () => {
       window.removeEventListener("storage", refreshValue);
-      if (shared)
-        window.removeEventListener(
-          "sharedstorage",
-          refreshValueCustom as EventListener
-        );
       document.removeEventListener("visibilitychange", checkValue);
     };
-  }, [key, shared]);
+  }, [key]);
 
   const updateValue = useCallback(
     (newValue: T) => {
       localStorage.setItem(key, JSON.stringify(newValue));
-      // dispach an event to let other components know i changed value
-      // because the value doesn't update if the change was made by the same tab
-      if (shared)
-        window.dispatchEvent(
-          new CustomEvent("sharedstorage", {
-            detail: { key, newValue: JSON.stringify(newValue) },
-          })
-        );
       setValue(newValue);
     },
-    [key, shared]
+    [key]
   );
 
   return [value, updateValue];

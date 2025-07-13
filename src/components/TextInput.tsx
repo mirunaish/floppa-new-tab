@@ -1,13 +1,11 @@
 import React from "react";
-import TextareaAutoSize from "react-textarea-autosize";
 
 interface TextInputProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
   style?: React.CSSProperties;
-  type?: "text" | "textarea";
-  onKeyDown?: (e: React.KeyboardEvent) => void;
+  long?: boolean;
 }
 
 /** normal text input */
@@ -16,17 +14,14 @@ const TextInput: React.FC<TextInputProps> = ({
   onChange,
   placeholder,
   style = {},
-  type = "text",
-  onKeyDown,
+  long = false,
 }) => {
-  return type === "textarea" ? (
-    <TextareaAutoSize
+  return long ? (
+    <textarea
       placeholder={placeholder}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      // fix height prop type mismatch (just ignore height for textareaautosize)
-      {...{ ...style, height: undefined, translate: undefined }}
-      onKeyDown={onKeyDown}
+      style={style}
     />
   ) : (
     <input
@@ -35,7 +30,6 @@ const TextInput: React.FC<TextInputProps> = ({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       style={style}
-      onKeyDown={onKeyDown}
     />
   );
 };
