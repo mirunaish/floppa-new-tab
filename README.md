@@ -21,7 +21,6 @@ Select a search engine, type your query, and press enter to search.
 Add new todos and check off completed ones.
 You can edit todos by clicking the pencil icon.
 Make your changes and press enter to submit, or the escape key to cancel.
-Reorder by pressing the arrows icon and then the up or down arrows on your keyboard. Click the icon again or press enter or escape to stop moving.
 
 Todos are stored in localStorage,
 so clearing cache or site data will delete them.
