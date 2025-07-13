@@ -103,9 +103,11 @@ function App() {
           )}
 
         <TaskBar
-          widgets={Object.entries(WIDGETS)
-            .filter(([id]) => !visible[id])
-            .map(([id, { icon }]) => ({ id, icon }))}
+          widgets={Object.entries(WIDGETS).map(([id, { icon }]) => ({
+            id,
+            icon,
+            visible: visible[id],
+          }))}
           open={toggleVisible}
         />
       </div>
