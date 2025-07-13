@@ -29,7 +29,17 @@ so clearing cache or site data will delete them.
 ### Daily quote
 
 A random quote every day. Click on the refresh button to get a new quote. Click
-on the upload button to upload a JSON with custom quotes.
+on the upload button to upload a JSON with custom quotes:
+
+```
+[
+  {
+    "quote": "...",
+    "author": "..."
+  },
+  ...
+]
+```
 
 Like Todos, these are
 stored in localStorage, so make sure to keep a backup.
@@ -37,6 +47,8 @@ stored in localStorage, so make sure to keep a backup.
 ### Text notes
 
 Add any text note to your new tab with a custom title.
+
+Also in local storage. Keep a backup.
 
 ### Images
 
@@ -49,7 +61,7 @@ modes.
 
 ## Dev Setup
 
-1. `npm install`
+1. `npm install --force`
 2. `npm run build`
 3. In Firefox, go to [about:debugging#/runtime/this-firefox](about:debugging#/runtime/this-firefox)
 4. In the Temporary Extensions section, click on Load Temporary Add-on...

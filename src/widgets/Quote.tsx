@@ -47,10 +47,15 @@ const Quote: React.FC<CardComponentProps> = ({ id, close }) => {
       buttons={() => (
         <>
           <FaUpload
+            title="upload quotes (see instructions in about widget)"
             className="click"
             onClick={() => document.getElementById("uploadQuotes")?.click()}
           />
-          <FaRotateRight className="click" onClick={refreshQuote} />
+          <FaRotateRight
+            title="get a new quote"
+            className="click"
+            onClick={refreshQuote}
+          />
         </>
       )}
       resizeable="nwse"
