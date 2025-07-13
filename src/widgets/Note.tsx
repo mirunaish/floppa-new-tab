@@ -35,7 +35,6 @@ const Note: React.FC<CardComponentProps & NoteInfo & NoteProps> = ({
       title={title}
       close={close}
       resizeable="nwse"
-      requireConfirmForClose
       buttons={() => (
         <FaPencil className="click" onClick={() => setIsEditing(true)} />
       )}
