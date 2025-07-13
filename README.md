@@ -2,7 +2,7 @@
 
 A Floppa-themed widget board for your new tab
 
-![Widget Board](images/floppa_widget_board.png)
+![Widget Board](images/floppa_new_tab.png)
 
 ## Widgets
 
@@ -61,7 +61,9 @@ modes.
 
 ## Dev Setup
 
-1. `npm install --force`
+Windows 11, node v22.13.0, npm v10.9.2
+
+1. `npm install --force` (there are some dependency conflicts, but everything seems to work okay)
 2. `npm run build`
 3. In Firefox, go to [about:debugging#/runtime/this-firefox](about:debugging#/runtime/this-firefox)
 4. In the Temporary Extensions section, click on Load Temporary Add-on...
