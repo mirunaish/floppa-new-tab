@@ -24,5 +24,13 @@
   background-color: var(--primary);
   display: flex;
   padding: 8px;
-  transition: background-color 0.25s;
+  transition:
+    background-color 0.15s,
+    filter 0.15s,
+    opacity 0.15s;
+}
+.taskbar__task.disabled {
+  filter: brightness(0.6);
+  opacity: 0.5;
+  cursor: default;
 }
