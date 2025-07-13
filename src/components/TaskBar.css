@@ -9,8 +9,6 @@
   background-color: var(--primaryAltTransparent);
   color: var(--text);
 
-  z-index: 1000;
-
   transition:
     background-color 0.25s,
     color 0.25s;
