@@ -108,9 +108,10 @@ const TodoItem: React.FC<TodoItemProps> = ({
       {!editing ? (
         <>
           <FaUpDown
-            className={"todo-reorder click " + (selected ? "selected" : "")}
+            className={"todo-reorder " + (selected ? "selected" : "")}
             onClick={() => toggleSelected(!selected)}
             style={{
+              cursor: "pointer",
               marginLeft: 8,
               flexShrink: 0,
             }}
@@ -118,8 +119,9 @@ const TodoItem: React.FC<TodoItemProps> = ({
 
           <FaPencil
             onClick={startEditing}
-            className="alt-text click"
+            className="alt-text"
             style={{
+              cursor: "pointer",
               marginLeft: 4,
               flexShrink: 0,
             }}
@@ -127,8 +129,9 @@ const TodoItem: React.FC<TodoItemProps> = ({
 
           <FaX
             onClick={() => removeTodo()}
-            className="alt-text click"
+            className="alt-text"
             style={{
+              cursor: "pointer",
               marginLeft: 8,
               flexShrink: 0,
             }}

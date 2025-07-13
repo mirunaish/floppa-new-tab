@@ -197,10 +197,13 @@ const Card: React.FC<CardProps> = ({
           }}
         >
           {/* minimize */}
-          <FaMinus className="click" onClick={() => setMinimized(!minimized)} />
+          <FaMinus
+            style={{ cursor: "pointer" }}
+            onClick={() => setMinimized(!minimized)}
+          />
           {/* resize */}
           <FaRegSquare
-            className="click"
+            style={{ cursor: "pointer" }}
             onClick={() => {
               setSize(initialSize);
               setResizingSize(initialSize);
