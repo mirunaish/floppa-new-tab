@@ -1,6 +1,6 @@
-# Floppa's New Tab
+# Floppa Home
 
-A Floppa-themed widget board for your new tab
+Floppa's widget board
 
 ![Widget Board](images/floppa_widget_board.png)
 
@@ -18,20 +18,13 @@ Select a search engine, type your query, and press enter to search.
 
 ### To do List
 
-Add new todos and check off completed ones.
-You can edit todos by clicking the pencil icon.
-Make your changes and press enter to submit, or the escape key to cancel.
-Reorder by pressing the arrows icon and then the up or down arrows on your keyboard. Click the icon again or press enter or escape to stop moving.
-
-Todos are stored in localStorage,
+Add new todos and check off completed ones. They are stored in localStorage,
 so clearing cache or site data will delete them.
 
 ### Daily quote
 
 A random quote every day. Click on the refresh button to get a new quote. Click
-on the upload button to upload a JSON with custom quotes.
-
-Like Todos, these are
+on the upload button to upload a JSON with custom quotes. Like Todos, these are
 stored in localStorage, so make sure to keep a backup.
 
 ### Text notes
@@ -47,10 +40,50 @@ Add nice cat images or GIFs for your new tab.
 Choose a cat inspired color theme for your widgets. Pick between light and dark
 modes.
 
-## Dev Setup
+## Setup
 
-1. `npm install`
-2. `npm run build`
-3. In Firefox, go to [about:debugging#/runtime/this-firefox](about:debugging#/runtime/this-firefox)
-4. In the Temporary Extensions section, click on Load Temporary Add-on...
-5. Select `build/manifest.json`
+Hosted on render [here](https://widget-board.onrender.com/).
+
+Set Firefox's default homepage on new windows to https://widget-board.onrender.com/ and use [this extension](https://addons.mozilla.org/en-US/firefox/addon/new-tab-homepage/) to make it the default new tab too.
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+
+- Configure the top-level `parserOptions` property like this:
+
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+});
+```
+
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+
+```js
+// eslint.config.js
+import react from "eslint-plugin-react";
+
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: "18.3" } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs["jsx-runtime"].rules,
+  },
+});
+```
