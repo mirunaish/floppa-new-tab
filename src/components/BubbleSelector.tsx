@@ -37,7 +37,7 @@ const BubbleSelector: React.FC<BubbleSelectorProps> = ({
     >
       {/* map over rows */}
       {options
-        .filter((_, i) => i % maxCols == 0)
+        .filter((_, i) => i % maxCols === 0)
         .map((_, i) => (
           <div
             key={i}

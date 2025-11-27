@@ -1,6 +1,6 @@
 import { RefObject, useEffect, useState } from "react";
 
-export function useActualSize(ref: RefObject<HTMLElement>) {
+export function useActualSize(ref: RefObject<HTMLElement | null>) {
   // actual rendered size of the element
   const [actualSize, setActualSize] = useState<{
     width: number;

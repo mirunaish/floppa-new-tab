@@ -272,7 +272,7 @@ const Card: React.FC<CardProps> = ({
         width: closeConfirmOpen ? actualSize.width : resizingSize.width,
         height: closeConfirmOpen
           ? actualSize.height
-          : resizeable == "ew" || minimized
+          : resizeable === "ew" || minimized
           ? "auto"
           : resizingSize.height,
         minWidth: "min-content",
