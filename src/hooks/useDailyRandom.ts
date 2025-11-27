@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import { Interval } from "../utils/types";
 import { generateRandom } from "../utils";
@@ -12,36 +12,36 @@ export function useDailyRandom(
   name: string,
   range: Interval
 ): [number, () => void] {
-  const [today, setToday] = useState(new Date().toDateString());
-
-  // when i switch to this tab, check if the date has changed
-  useEffect(() => {
-    const refreshDate = () => {
-      if (document.visibilityState !== "visible") return;
-
-      const newDate = new Date().toDateString();
-      if (newDate !== today) setToday(newDate);
-    };
-
-    document.addEventListener("visibilitychange", refreshDate);
-    return () => document.removeEventListener("visibilitychange", refreshDate);
-  }, [today]);
+  const getToday = useCallback(() => new Date().toDateString(), []);
 
   // store today's random number in local storage
   const [random, setRandom] = useLocalStorage<Random>(`${name}-random`, {
     number: generateRandom(range),
-    date: today,
+    date: getToday(),
   });
 
   // on user request, get a new random number
   const refresh = useCallback(() => {
-    setRandom({ number: generateRandom(range), date: today });
-  }, [range, setRandom, today]);
+    setRandom({ number: generateRandom(range), date: getToday() });
+  }, [range, setRandom, getToday]);
 
-  // if the date has changed, generate a new random number
+  const refreshDate = useCallback(() => {
+    if (document.visibilityState !== "visible") return;
+    if (random.date === getToday()) return;
+    refresh();
+  }, [getToday, random.date, refresh]);
+
+  // when i switch to this tab, check if the date has changed
   useEffect(() => {
-    if (random.date != today) refresh();
-  }, [random, refresh, today]);
+    document.addEventListener("visibilitychange", refreshDate);
+    return () => document.removeEventListener("visibilitychange", refreshDate);
+  }, [refreshDate]);
+
+  // call once on load...
+  useEffect(() => {
+    refreshDate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return [random.number, refresh];
 }
