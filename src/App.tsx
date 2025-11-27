@@ -12,7 +12,7 @@ import {
 import { FaSearch } from "react-icons/fa";
 import { GiRingedPlanet } from "react-icons/gi";
 import { useLocalStorage } from "./hooks/useLocalStorage";
-import { CardComponentProps } from "./components/Card";
+import { CardComponentProps, useCardZIndexes } from "./components/Card";
 import Quote from "./widgets/Quote";
 import SearchBar from "./widgets/SearchBar";
 import ThemeSelector from "./widgets/ThemeSelector";
@@ -101,6 +101,8 @@ const WIDGETS: Record<
 };
 
 function App() {
+  const { bringToTop } = useCardZIndexes();
+
   const [visible, setVisible] = useLocalStorage<Record<string, boolean>>(
     "widgets-visible",
     {
@@ -118,9 +120,11 @@ function App() {
   );
   const toggleVisible = useCallback(
     (id: string) => {
+      // bring the newly visible card to top too
+      if (!visible[id]) bringToTop(id);
       setVisible({ ...visible, [id]: !visible[id] });
     },
-    [setVisible, visible]
+    [bringToTop, setVisible, visible]
   );
 
   return (
