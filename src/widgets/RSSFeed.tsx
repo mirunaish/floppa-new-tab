@@ -54,9 +54,21 @@ const RSSFeed: React.FC<CardComponentProps & RSSFeedProps> = ({
       const link = item.querySelector("link")?.textContent;
       if (!link) throw new Error("No link found in RSS feed");
 
-      const enclosure = item.querySelector('enclosure[type="image/jpeg"]');
+      const imageEnclosureQueries = [
+        'enclosure[type="image/jpeg"]',
+        'enclosure[type="image/jpg"]',
+        'enclosure[type="image/png"]',
+      ];
+
       let imageUrl = null;
-      if (enclosure) imageUrl = enclosure.getAttribute("url");
+      // find the first image
+      for (const selector of imageEnclosureQueries) {
+        const enclosure = item.querySelector(selector);
+        if (enclosure) {
+          imageUrl = enclosure.getAttribute("url");
+          break;
+        }
+      }
 
       setPost({
         title,
