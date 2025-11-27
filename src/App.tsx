@@ -7,6 +7,7 @@ import {
   FaQuoteRight,
   FaCircleInfo,
   FaBook,
+  FaSquareCheck,
 } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import { GiRingedPlanet } from "react-icons/gi";
@@ -21,6 +22,7 @@ import TaskBar from "./components/TaskBar";
 import NewNote from "./widgets/NewNote";
 import About from "./widgets/About";
 import RSSFeed from "./widgets/RSSFeed";
+import DailyTodo from "./widgets/DailyTodo";
 
 const WIDGETS: Record<
   string,
@@ -37,6 +39,12 @@ const WIDGETS: Record<
       <TodoList key={props.id} {...props} />
     ),
     icon: FaList,
+  },
+  dailyTodo: {
+    component: (props: CardComponentProps) => (
+      <DailyTodo key={props.id} {...props} />
+    ),
+    icon: FaSquareCheck,
   },
   quote: {
     component: (props: CardComponentProps) => (
@@ -98,10 +106,13 @@ function App() {
     {
       searchBar: true,
       todoList: true,
+      dailyTodo: false,
       quote: true,
-      themeSelector: false,
+      wordOfTheDay: false,
+      astronomyPicture: false,
       newImage: false,
       newNote: false,
+      themeSelector: false,
       about: false,
     }
   );
