@@ -7,11 +7,12 @@ import {
   FaQuoteRight,
   FaCircleInfo,
   FaBook,
+  FaSquareCheck,
 } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import { GiRingedPlanet } from "react-icons/gi";
 import { useLocalStorage } from "./hooks/useLocalStorage";
-import { CardComponentProps } from "./components/Card";
+import { CardComponentProps, useCardZIndexes } from "./components/Card";
 import Quote from "./widgets/Quote";
 import SearchBar from "./widgets/SearchBar";
 import ThemeSelector from "./widgets/ThemeSelector";
@@ -21,6 +22,7 @@ import TaskBar from "./components/TaskBar";
 import NewNote from "./widgets/NewNote";
 import About from "./widgets/About";
 import RSSFeed from "./widgets/RSSFeed";
+import DailyTodo from "./widgets/DailyTodo";
 
 const WIDGETS: Record<
   string,
@@ -37,6 +39,12 @@ const WIDGETS: Record<
       <TodoList key={props.id} {...props} />
     ),
     icon: FaList,
+  },
+  dailyTodo: {
+    component: (props: CardComponentProps) => (
+      <DailyTodo key={props.id} {...props} />
+    ),
+    icon: FaSquareCheck,
   },
   quote: {
     component: (props: CardComponentProps) => (
@@ -93,23 +101,30 @@ const WIDGETS: Record<
 };
 
 function App() {
+  const { bringToTop } = useCardZIndexes();
+
   const [visible, setVisible] = useLocalStorage<Record<string, boolean>>(
     "widgets-visible",
     {
       searchBar: true,
       todoList: true,
+      dailyTodo: false,
       quote: true,
-      themeSelector: false,
+      wordOfTheDay: false,
+      astronomyPicture: false,
       newImage: false,
       newNote: false,
+      themeSelector: false,
       about: false,
     }
   );
   const toggleVisible = useCallback(
     (id: string) => {
+      // bring the newly visible card to top too
+      if (!visible[id]) bringToTop(id);
       setVisible({ ...visible, [id]: !visible[id] });
     },
-    [setVisible, visible]
+    [bringToTop, setVisible, visible]
   );
 
   return (
@@ -119,9 +134,9 @@ function App() {
           .filter(
             ([id]) =>
               visible[id] ||
-              id == "newImage" ||
-              id == "newNote" ||
-              id == "themeSelector"
+              id === "newImage" ||
+              id === "newNote" ||
+              id === "themeSelector"
           )
           .map(([id, { component }]) =>
             component({ id, close: toggleVisible, visible: visible[id] })

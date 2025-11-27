@@ -13,6 +13,54 @@ import { FaRegSquare } from "react-icons/fa6";
 import { FaX } from "react-icons/fa6";
 import { useActualSize } from "../hooks/useActualSize";
 
+export const useCardZIndexes = (id?: string | undefined) => {
+  const [zIndexes, setZIndexes] = useLocalStorage<Record<string, number>>(
+    "z-indexes",
+    {},
+    true
+  );
+  const minZIndex = useMemo(
+    () => Object.values(zIndexes).reduce((p, c) => Math.min(p, c), Infinity),
+    [zIndexes]
+  );
+  const maxZIndex = useMemo(
+    () => Object.values(zIndexes).reduce((p, c) => Math.max(p, c), 0),
+    [zIndexes]
+  );
+
+  // if my z index is not in local storage, add it
+  useEffect(() => {
+    if (id && !zIndexes[id]) {
+      setZIndexes({ ...zIndexes, [id]: maxZIndex + 1 });
+    }
+  }, [id, maxZIndex, setZIndexes, zIndexes]);
+
+  const bringToTop = useCallback(
+    (idToTop: string) => {
+      if (zIndexes[idToTop] === maxZIndex) return; // already on top
+
+      let newZIndexes: Record<string, number> = {
+        ...zIndexes,
+        [idToTop]: maxZIndex + 1,
+      }; // move to top
+
+      // if this was the minimum, subtract the minimum from all z indexes so they don't explode
+      if (zIndexes[idToTop] === minZIndex)
+        newZIndexes = Object.entries(newZIndexes)
+          .map(([id, value]) => [id, value - minZIndex + 1])
+          .reduce(
+            (p, [id, value]) => ({ ...p, [id as unknown as string]: value }),
+            {}
+          );
+
+      setZIndexes(newZIndexes);
+    },
+    [maxZIndex, minZIndex, setZIndexes, zIndexes]
+  );
+
+  return { zIndexes, zIndex: id ? zIndexes[id] : undefined, bringToTop };
+};
+
 // props of component that uses card
 export interface CardComponentProps {
   id: string;
@@ -197,43 +245,7 @@ const Card: React.FC<CardProps> = ({
 
   /* ------------------------------------- z index -------------------------------------- */
 
-  const [zIndexes, setZIndexes] = useLocalStorage<Record<string, number>>(
-    "z-indexes",
-    {},
-    true
-  );
-  const minZIndex = useMemo(
-    () => Object.values(zIndexes).reduce((p, c) => Math.min(p, c), Infinity),
-    [zIndexes]
-  );
-  const maxZIndex = useMemo(
-    () => Object.values(zIndexes).reduce((p, c) => Math.max(p, c), 0),
-    [zIndexes]
-  );
-
-  // if my z index is not in local storage, add it
-  useEffect(() => {
-    if (!zIndexes[id]) {
-      setZIndexes({ ...zIndexes, [id]: maxZIndex + 1 });
-    }
-  }, [id, maxZIndex, setZIndexes, zIndexes]);
-
-  const resetZIndex = useCallback(() => {
-    if (zIndexes[id] === maxZIndex) return; // already on top
-
-    let newZIndexes = { ...zIndexes, [id]: maxZIndex + 1 }; // move to top
-
-    // if this was the minimum, subtract the minimum from all z indexes so they don't explode
-    if (zIndexes[id] === minZIndex)
-      newZIndexes = Object.entries(newZIndexes)
-        .map(([id, value]) => [id, value - minZIndex + 1])
-        .reduce(
-          (p, [id, value]) => ({ ...p, [id as unknown as string]: value }),
-          {}
-        );
-
-    setZIndexes(newZIndexes);
-  }, [id, maxZIndex, minZIndex, setZIndexes, zIndexes]);
+  const { zIndex, bringToTop } = useCardZIndexes(id);
 
   /* --------------------------------- close confirmation --------------------------------- */
 
@@ -260,18 +272,18 @@ const Card: React.FC<CardProps> = ({
         width: closeConfirmOpen ? actualSize.width : resizingSize.width,
         height: closeConfirmOpen
           ? actualSize.height
-          : resizeable == "ew" || minimized
-            ? "auto"
-            : resizingSize.height,
+          : resizeable === "ew" || minimized
+          ? "auto"
+          : resizingSize.height,
         minWidth: "min-content",
         minHeight: minimized ? 0 : 100,
 
         display: "flex",
         flexDirection: "column",
 
-        zIndex: zIndexes[id] ?? 0,
+        zIndex: zIndex ?? 0,
       }}
-      onMouseDown={resetZIndex}
+      onMouseDown={() => bringToTop(id)}
     >
       {/* title bar */}
       <div
